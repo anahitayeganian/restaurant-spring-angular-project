@@ -1,4 +1,4 @@
-package com.ay.restaurant.POJO;
+package com.ay.restaurant.pojo;
 
 import jakarta.persistence.*;
 import lombok.Data;
