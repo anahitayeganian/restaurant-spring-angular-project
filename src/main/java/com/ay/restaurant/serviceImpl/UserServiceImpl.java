@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return RestaurantUtils.getResponseEntity(RestaurantConstants.ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateSignUpMap(Map<String,String> requestMap) {
