@@ -2,6 +2,7 @@ package com.ay.restaurant.restImpl;
 
 import com.ay.restaurant.constants.RestaurantConstants;
 import com.ay.restaurant.rest.UserRest;
+import com.ay.restaurant.service.UserService;
 import com.ay.restaurant.utils.RestaurantUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,6 @@ public class UserRestImpl implements UserRest {
         } catch(Exception exception) {
             exception.printStackTrace();
         }
-        return RestaurantUtils.getResponseEntity(RestaurantConstants.ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);  // 500
     }
 }
