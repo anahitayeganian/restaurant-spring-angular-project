@@ -18,7 +18,7 @@ public class UserRestImpl implements UserRest {
     private UserService userService;
 
     @Override
-    public ResponseEntity<String> signUp(Map<String, String> requestMap) {
+    public ResponseEntity<String> signUp(Map<String,String> requestMap) {
         try {
             return userService.signUp(requestMap);
         } catch(Exception exception) {
