@@ -2,10 +2,12 @@ package com.ay.restaurant.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtUtils {
 
-    private String secretKey = "c10dc3a329f95a6758774b366308bd6e33ede12c47f5c097bc294f34834b1e2";
+    private static final String SECRET_KEY = "c10dc3a329f95a6758774b366308bd6e33ede12c47f5c097bc294f34834b1e2";
 
     /* This method takes a JWT string token as input and extracts the subject claim from it.
     * The subject claim typically represents the identity of the user associated with the token.
@@ -40,7 +42,13 @@ public class JwtUtils {
     /* This method takes a JWT string token as input, extracts the claims and returns them as a Claims object.
     * It uses the Jwts class to parse the token, verifies its signature using a secret key (secretKey) and then extracts the claims */
     public Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        return Jwts.parser().verifyWith(getSignInKey()).build().parseSignedClaims(token).getPayload();
+        //return Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
+    }
+
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     private Boolean isTokenExpired(String token) {
@@ -55,11 +63,11 @@ public class JwtUtils {
 
     private String createToken(Map<String,Object> claims, String subject) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)    // Username
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 5))   // Expires in 5 hours
-                .signWith(SignatureAlgorithm.HS256, secretKey)  // To pass the signature
+                .claims(claims)
+                .subject(subject)   // Username
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 5))   // Expires in 5 hours
+                .signWith(getSignInKey(), Jwts.SIG.HS256)     // To pass the signature
                 .compact();
     }
 
