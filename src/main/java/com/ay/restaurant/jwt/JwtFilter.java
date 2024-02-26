@@ -36,23 +36,25 @@ public class JwtFilter extends OncePerRequestFilter {
     * SecurityContextHolder, and finally it continues the filter chain */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        final String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        String token = null;
-        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
-        token = authorizationHeader.substring(7);
-        this.userEmail = jwtUtils.extractUsername(token);
-        this.claims = jwtUtils.extractAllClaims(token);
-        /* I also need to check whether the user is not yet authenticated because if they are, I don't need to perform all the checks again.
-        * In this scenario, all I need to do is update the SecurityContextHolder and leave it to the DispatcherServlet */
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(userEmail);
-            if (jwtUtils.validateToken(token, userDetails)) { //&& isTokenValid) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        if(!httpServletRequest.getServletPath().matches("/user/login|/user/signup|/user/forgotPassword")) {
+            final String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            String token = null;
+            if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+                filterChain.doFilter(httpServletRequest, httpServletResponse);
+                return;
+            }
+            token = authorizationHeader.substring(7);
+            this.userEmail = jwtUtils.extractUsername(token);
+            this.claims = jwtUtils.extractAllClaims(token);
+            /* I also need to check whether the user is not yet authenticated because if they are, I don't need to perform all the checks again.
+             * In this scenario, all I need to do is update the SecurityContextHolder and leave it to the DispatcherServlet */
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(userEmail);
+                if (jwtUtils.validateToken(token, userDetails)) { //&& isTokenValid) {
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
