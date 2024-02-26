@@ -35,8 +35,8 @@ public class JwtUtils {
     * It first calls extractAllClaims(token) to obtain the claims as a Claims object. Then, it applies the claimsResolver function
     * to the Claims object using the apply() method, which converts the Claims object into the desired type T */
     public <T> T extractClaims(String token, Function<Claims,T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        final Claims extractedClaims = extractAllClaims(token);
+        return claimsResolver.apply(extractedClaims);
     }
 
     /* This method takes a JWT string token as input, extracts the claims and returns them as a Claims object.
@@ -46,19 +46,18 @@ public class JwtUtils {
         //return Jwts.parser().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
     }
 
-    private SecretKey getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    private Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date()); // Represents the time at which it was allocated
-    }
-
     public String generateToken(String username, String role) {
         Map<String,Object> claims = new HashMap<>();
         claims.put("role", role);
         return createToken(claims, username);
+    }
+
+    /* The UserDetails interface defines the contract for user information required by the Spring Security framework during the
+     * authentication process. It encapsulates essential user details such as username, password, roles, and whether the user's
+     * account is enabled or not */
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private String createToken(Map<String,Object> claims, String subject) {
@@ -67,16 +66,17 @@ public class JwtUtils {
                 .subject(subject)   // Username
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 5))   // Expires in 5 hours
-                .signWith(getSignInKey(), Jwts.SIG.HS256)     // To pass the signature
+                .signWith(getSignInKey(), Jwts.SIG.HS256)   // To pass the signature
                 .compact();
     }
 
-    /* The UserDetails interface defines the contract for user information required by the Spring Security framework during the
-    * authentication process. It encapsulates essential user details such as username, password, roles, and whether the user's
-    * account is enabled or not */
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date()); // Represents the time at which it was allocated
     }
 
 }
