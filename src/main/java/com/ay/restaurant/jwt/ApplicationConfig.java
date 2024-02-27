@@ -15,8 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     /* The AuthenticationProvider bean configures an instance of DaoAuthenticationProvider to set the UserDetailsService to
     * customUserDetailsService, indicating that this provider will use the custom user details service to load user data during

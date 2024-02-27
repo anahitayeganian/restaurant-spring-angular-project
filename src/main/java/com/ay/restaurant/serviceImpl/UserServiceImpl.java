@@ -5,8 +5,8 @@ import com.ay.restaurant.dao.UserDao;
 import com.ay.restaurant.pojo.User;
 import com.ay.restaurant.service.UserService;
 import com.ay.restaurant.utils.RestaurantUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.util.Objects;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
 
     @Override
     public ResponseEntity<String> signUp(Map<String,String> requestMap) {
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
                     return RestaurantUtils.getResponseEntity("Email already exists", HttpStatus.BAD_REQUEST); // 400
             } else
                 return RestaurantUtils.getResponseEntity(RestaurantConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
-        } catch (Exception exception) {
+        } catch(Exception exception) {
             exception.printStackTrace();
         }
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
