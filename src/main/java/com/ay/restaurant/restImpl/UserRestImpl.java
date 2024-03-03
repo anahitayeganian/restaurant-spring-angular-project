@@ -27,4 +27,14 @@ public class UserRestImpl implements UserRest {
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);  // 500
     }
 
+    @Override
+    public ResponseEntity<String> login(Map<String,String> requestMap) {
+        try {
+            return userService.login(requestMap);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

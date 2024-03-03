@@ -2,6 +2,8 @@ package com.ay.restaurant.serviceImpl;
 
 import com.ay.restaurant.constants.RestaurantConstants;
 import com.ay.restaurant.dao.UserDao;
+import com.ay.restaurant.jwt.CustomUserDetailsService;
+import com.ay.restaurant.jwt.JwtUtils;
 import com.ay.restaurant.pojo.User;
 import com.ay.restaurant.service.UserService;
 import com.ay.restaurant.utils.RestaurantUtils;
@@ -9,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -20,6 +25,9 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final AuthenticationManager authenticationManager;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final JwtUtils jwtUtils;
 
     @Override
     public ResponseEntity<String> signUp(Map<String,String> requestMap) {
@@ -57,6 +65,30 @@ public class UserServiceImpl implements UserService {
         user.setStatus("false");
         user.setRole("user");
         return user;
+    }
+
+    /* If the authentication is successful it checks if the user's status is active. If the status is true, it generates a JWT token and returns
+    * it along with an HTTP status code of 200, if the user's status is not true it returns a message indicating that the user needs to wait for
+    * admin approval along with an HTTP status code of 400.
+    * If the authentication fails (due to incorrect credentials or other reasons), it catches the exception and logs it. Then, it returns a message
+    * indicating bad credentials along with an HTTP status code of 400 (Bad Request) */
+    @Override
+    public ResponseEntity<String> login(Map<String, String> requestMap) {
+        log.info("Inside login");
+        try {
+            /* It attempts to authenticate the user by using the provided email and password through the authenticationManager.authenticate() method which uses Spring Security's authentication mechanisms */
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestMap.get("email"), requestMap.get("password")));
+            if(authentication.isAuthenticated()) {
+                if(customUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("true"))
+                    return new ResponseEntity<String>("{\"token\":\"" + jwtUtils.generateToken(customUserDetailsService.getUserDetail().getEmail(),
+                            customUserDetailsService.getUserDetail().getRole()) + "\"}", HttpStatus.OK);
+                else
+                    return new ResponseEntity<String>("{\"message\":\"" + "Wait for admin approval" + "\"}", HttpStatus.BAD_REQUEST);
+            }
+        } catch(Exception exception) {
+            log.info("{}", exception);
+        }
+        return new ResponseEntity<String>("{\"message\":\"" + "Bad credentials" + "\"}", HttpStatus.BAD_REQUEST);
     }
 
 }
