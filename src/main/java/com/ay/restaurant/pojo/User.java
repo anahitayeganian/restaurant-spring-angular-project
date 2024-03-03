@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.io.Serializable;
 
 @NamedQuery(name = "User.findByEmail", query = "select u from User u where u.email=:email")
+@NamedQuery(name = "User.findAllUsers", query = "select new com.ay.restaurant.dto.UserDto(u.id,u.name,u.email,u.contactNumber,u.status,u.role) from User u where u.role='user'")
 
 @Data
 @Entity

@@ -2,7 +2,9 @@ package com.ay.restaurant.serviceImpl;
 
 import com.ay.restaurant.constants.RestaurantConstants;
 import com.ay.restaurant.dao.UserDao;
+import com.ay.restaurant.dto.UserDto;
 import com.ay.restaurant.jwt.CustomUserDetailsService;
+import com.ay.restaurant.jwt.JwtFilter;
 import com.ay.restaurant.jwt.JwtUtils;
 import com.ay.restaurant.pojo.User;
 import com.ay.restaurant.service.UserService;
@@ -16,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,12 +32,13 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtils jwtUtils;
+    private final JwtFilter jwtFilter;
 
     @Override
     public ResponseEntity<String> signUp(Map<String,String> requestMap) {
         log.info("Inside signup {}", requestMap);
         try {
-            if (validateSignUpMap(requestMap)) {
+            if(validateSignUpMap(requestMap)) {
                 User user = userDao.findByEmail(requestMap.get("email"));
                 if (Objects.isNull(user)) {
                     userDao.save(getUserFromMap(requestMap));
@@ -68,12 +73,12 @@ public class UserServiceImpl implements UserService {
     }
 
     /* If the authentication is successful it checks if the user's status is active. If the status is true, it generates a JWT token and returns
-    * it along with an HTTP status code of 200, if the user's status is not true it returns a message indicating that the user needs to wait for
-    * admin approval along with an HTTP status code of 400.
-    * If the authentication fails (due to incorrect credentials or other reasons), it catches the exception and logs it. Then, it returns a message
-    * indicating bad credentials along with an HTTP status code of 400 (Bad Request) */
+     * it along with an HTTP status code of 200, if the user's status is not true it returns a message indicating that the user needs to wait for
+     * admin approval along with an HTTP status code of 400.
+     * If the authentication fails (due to incorrect credentials or other reasons), it catches the exception and logs it. Then, it returns a message
+     * indicating bad credentials along with an HTTP status code of 400 (Bad Request) */
     @Override
-    public ResponseEntity<String> login(Map<String, String> requestMap) {
+    public ResponseEntity<String> login(Map<String,String> requestMap) {
         log.info("Inside login");
         try {
             /* It attempts to authenticate the user by using the provided email and password through the authenticationManager.authenticate() method which uses Spring Security's authentication mechanisms */
@@ -89,6 +94,19 @@ public class UserServiceImpl implements UserService {
             log.info("{}", exception);
         }
         return new ResponseEntity<String>("{\"message\":\"" + "Bad credentials" + "\"}", HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        try {
+            if(jwtFilter.isAdmin())
+                return new ResponseEntity<List<UserDto>>(userDao.findAllUsers(), HttpStatus.OK);
+            else
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<List<UserDto>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
