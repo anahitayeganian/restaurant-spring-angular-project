@@ -7,6 +7,7 @@ import com.ay.restaurant.service.UserService;
 import com.ay.restaurant.utils.RestaurantUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,6 +49,16 @@ public class UserRestImpl implements UserRest {
             exception.printStackTrace();
         }
         return new ResponseEntity<List<UserDto>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateStatus(Map<String, String> requestMap) {
+        try{
+            return userService.updateStatus(requestMap);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

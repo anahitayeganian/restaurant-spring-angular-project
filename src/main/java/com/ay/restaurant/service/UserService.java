@@ -14,4 +14,6 @@ public interface UserService {
 
     public ResponseEntity<List<UserDto>> getAllUsers();
 
+    public ResponseEntity<String> updateStatus(Map<String,String> requestMap);
+
 }

@@ -18,10 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -88,12 +85,12 @@ public class UserServiceImpl implements UserService {
                     return new ResponseEntity<String>("{\"token\":\"" + jwtUtils.generateToken(customUserDetailsService.getUserDetail().getEmail(),
                             customUserDetailsService.getUserDetail().getRole()) + "\"}", HttpStatus.OK);
                 else
-                    return new ResponseEntity<String>("{\"message\":\"" + "Wait for admin approval" + "\"}", HttpStatus.BAD_REQUEST);
+                    return RestaurantUtils.getResponseEntity("Wait for admin approval", HttpStatus.BAD_REQUEST);
             }
         } catch(Exception exception) {
             log.info("{}", exception);
         }
-        return new ResponseEntity<String>("{\"message\":\"" + "Bad credentials" + "\"}", HttpStatus.BAD_REQUEST);
+        return RestaurantUtils.getResponseEntity("Bad credentials", HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -106,7 +103,29 @@ public class UserServiceImpl implements UserService {
         } catch(Exception exception) {
             exception.printStackTrace();
         }
-        return new ResponseEntity<List<UserDto>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateStatus(Map<String,String> requestMap) {
+        try {
+            if(jwtFilter.isAdmin()) {
+                /* Firstly we need to verify whether that particular user exists in our database */
+                Integer id = Integer.parseInt(requestMap.get("id"));
+                Optional<User> user = userDao.findById(id);
+                if (!user.isEmpty()) {
+                    userDao.updateStatus(requestMap.get("status"), id);
+                    return RestaurantUtils.getResponseEntity("User status updated successfully", HttpStatus.OK);
+                }
+                else
+                    return RestaurantUtils.getResponseEntity("User id does not exist", HttpStatus.OK);
+            }
+            else
+                return RestaurantUtils.getResponseEntity(RestaurantConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
