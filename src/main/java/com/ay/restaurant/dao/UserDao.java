@@ -15,11 +15,13 @@ public interface UserDao extends JpaRepository<User, Integer> {
 
     List<UserDto> findAllUsers();
 
+    List<String> findAdminsEmail();
+
     /* Database operations typically require transactional support to ensure data consistency and integrity. Transactions guarantee
      * that a group of operations either all succeed or all fail together, ensuring atomicity (all or nothing)
      * Modifying queries include SQL statements that perform insert, update, delete, or DDL (Data Definition Language) operations */
     @Transactional
     @Modifying
     Integer updateStatus(@Param("status") String status, @Param("id") Integer id);
-
+    
 }
