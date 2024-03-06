@@ -16,4 +16,6 @@ public interface UserService {
 
     public ResponseEntity<String> updateStatus(Map<String,String> requestMap);
 
+    public ResponseEntity<String> checkToken();
+
 }

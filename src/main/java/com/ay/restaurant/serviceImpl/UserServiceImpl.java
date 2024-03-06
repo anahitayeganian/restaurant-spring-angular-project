@@ -141,4 +141,9 @@ public class UserServiceImpl implements UserService {
             emailUtils.sendSimpleMessage(currentAdmin, "Account disabled", "USER: " +modifiedUser+ "\nis been disabled by\nADMIN: " +currentAdmin, adminsEmail);
     }
 
+    @Override
+    public ResponseEntity<String> checkToken() {
+        return new ResponseEntity<>("true", HttpStatus.OK);
+    }
+
 }
