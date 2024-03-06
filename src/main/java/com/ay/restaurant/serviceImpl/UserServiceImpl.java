@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final JwtUtils jwtUtils;
     private final JwtFilter jwtFilter;
     private final EmailUtils emailUtils;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseEntity<String> signUp(Map<String,String> requestMap) {
@@ -65,7 +67,7 @@ public class UserServiceImpl implements UserService {
         user.setName(requestMap.get("name"));
         user.setContactNumber(requestMap.get("contactNumber"));
         user.setEmail(requestMap.get("email"));
-        user.setPassword(requestMap.get("password"));
+        user.setPassword(passwordEncoder.encode(requestMap.get("password")));
         user.setStatus("false");
         user.setRole("user");
         return user;
@@ -116,7 +118,7 @@ public class UserServiceImpl implements UserService {
                 Integer id = Integer.parseInt(requestMap.get("id"));
                 String status = requestMap.get("status");
                 Optional<User> user = userDao.findById(id);
-                if (!user.isEmpty() && !status.isEmpty()) {
+                if(!user.isEmpty() && !status.isEmpty()) {
                     userDao.updateStatus(status, id);
                     sendEmailToAllAdmins(status, user.get().getEmail(), userDao.findAdminsEmail());
                     return RestaurantUtils.getResponseEntity("User status updated successfully", HttpStatus.OK);
