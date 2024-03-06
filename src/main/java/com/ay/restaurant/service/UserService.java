@@ -18,4 +18,6 @@ public interface UserService {
 
     public ResponseEntity<String> checkToken();
 
+    public ResponseEntity<String> checkPassword(Map<String,String> requestMap);
+
 }

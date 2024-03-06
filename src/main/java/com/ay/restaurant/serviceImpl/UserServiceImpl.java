@@ -148,4 +148,22 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>("true", HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<String> checkPassword(Map<String,String> requestMap) {
+        try{
+            User currentUser = userDao.findByEmail(jwtFilter.getCurrentUser());
+            if(!Objects.isNull(currentUser)) {
+                if(passwordEncoder.matches(requestMap.get("oldPassword"), currentUser.getPassword())) {
+                    userDao.updatePassword(passwordEncoder.encode(requestMap.get("newPassword")), currentUser.getId());
+                    return RestaurantUtils.getResponseEntity("Password updated successfully", HttpStatus.OK);
+                }
+                else
+                    return RestaurantUtils.getResponseEntity("Incorrect old password", HttpStatus.BAD_REQUEST);
+            }
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
