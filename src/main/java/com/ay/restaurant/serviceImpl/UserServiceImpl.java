@@ -8,6 +8,7 @@ import com.ay.restaurant.jwt.JwtFilter;
 import com.ay.restaurant.jwt.JwtUtils;
 import com.ay.restaurant.pojo.User;
 import com.ay.restaurant.service.UserService;
+import com.ay.restaurant.utils.EmailUtils;
 import com.ay.restaurant.utils.RestaurantUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtils jwtUtils;
     private final JwtFilter jwtFilter;
+    private final EmailUtils emailUtils;
 
     @Override
     public ResponseEntity<String> signUp(Map<String,String> requestMap) {
@@ -112,9 +114,11 @@ public class UserServiceImpl implements UserService {
             if(jwtFilter.isAdmin()) {
                 /* Firstly we need to verify whether that particular user exists in our database */
                 Integer id = Integer.parseInt(requestMap.get("id"));
+                String status = requestMap.get("status");
                 Optional<User> user = userDao.findById(id);
-                if (!user.isEmpty()) {
-                    userDao.updateStatus(requestMap.get("status"), id);
+                if (!user.isEmpty() && !status.isEmpty()) {
+                    userDao.updateStatus(status, id);
+                    sendEmailToAllAdmins(status, user.get().getEmail(), userDao.findAdminsEmail());
                     return RestaurantUtils.getResponseEntity("User status updated successfully", HttpStatus.OK);
                 }
                 else
@@ -126,6 +130,15 @@ public class UserServiceImpl implements UserService {
             exception.printStackTrace();
         }
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private void sendEmailToAllAdmins(String status, String modifiedUser, List<String> adminsEmail) {
+        String currentAdmin = jwtFilter.getCurrentUser();
+        adminsEmail.remove(currentAdmin);
+        if(status.equalsIgnoreCase("true"))
+            emailUtils.sendSimpleMessage(currentAdmin, "Account approved", "USER: " +modifiedUser+ "\nis been approved by\nADMIN: " +currentAdmin, adminsEmail);
+        else
+            emailUtils.sendSimpleMessage(currentAdmin, "Account disabled", "USER: " +modifiedUser+ "\nis been disabled by\nADMIN: " +currentAdmin, adminsEmail);
     }
 
 }
