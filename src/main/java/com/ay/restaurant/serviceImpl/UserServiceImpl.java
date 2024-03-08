@@ -12,6 +12,7 @@ import com.ay.restaurant.utils.EmailUtils;
 import com.ay.restaurant.utils.RestaurantUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,6 +35,9 @@ public class UserServiceImpl implements UserService {
     private final JwtFilter jwtFilter;
     private final EmailUtils emailUtils;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${application.domain}")
+    private String domain;
 
     @Override
     public ResponseEntity<String> signUp(Map<String,String> requestMap) {
@@ -164,6 +168,29 @@ public class UserServiceImpl implements UserService {
             exception.printStackTrace();
         }
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
+        try {
+            User user = userDao.findByEmail(requestMap.get("email"));
+            if(!Objects.isNull(user)) {
+                /* Generate reset link */
+                String resetLink = domain + "/resetPassword?token=" + generateResetToken(user.getEmail());
+                /* Send email with reset link */
+                emailUtils.forgotMail(user.getEmail(), "Password reset request", resetLink);
+                return RestaurantUtils.getResponseEntity("Check your email to reset your password", HttpStatus.OK);
+            }
+            else
+                return RestaurantUtils.getResponseEntity("Incorrect email", HttpStatus.BAD_REQUEST);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private String generateResetToken(String username) {
+        return jwtUtils.generateResetToken(username);
     }
 
 }

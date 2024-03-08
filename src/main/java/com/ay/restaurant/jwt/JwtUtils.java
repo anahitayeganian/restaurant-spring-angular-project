@@ -79,4 +79,9 @@ public class JwtUtils {
         return extractExpiration(token).before(new Date()); // Represents the time at which it was allocated
     }
 
+    public String generateResetToken(String username) {
+        Map<String,Object> claims = new HashMap<>();
+        claims.put("type", "reset");
+        return createToken(claims, username);
+    }
 }

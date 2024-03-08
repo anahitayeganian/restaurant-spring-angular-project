@@ -20,4 +20,6 @@ public interface UserService {
 
     public ResponseEntity<String> checkPassword(Map<String,String> requestMap);
 
+    public ResponseEntity<String> forgotPassword(Map<String,String> requestMap);
+
 }
