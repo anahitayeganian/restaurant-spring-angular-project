@@ -1,7 +1,9 @@
 package com.ay.restaurant.pojo;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -14,6 +16,8 @@ import java.io.Serializable;
 @NamedQuery(name = "User.updatePassword", query = "update User u set u.password=:password where u.id=:id")
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @DynamicInsert
 @DynamicUpdate
