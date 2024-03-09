@@ -10,6 +10,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
+@NamedQuery(name = "Category.findAllCategories", query = "select c from Category c")
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
