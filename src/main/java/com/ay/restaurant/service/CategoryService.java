@@ -12,4 +12,6 @@ public interface CategoryService {
 
     public ResponseEntity<List<Category>> getAllCategories(String filterList);
 
+    public ResponseEntity<String> updateCategory(Map<String,String> requestMap);
+
 }

@@ -10,6 +10,7 @@ import com.ay.restaurant.pojo.User;
 import com.ay.restaurant.service.UserService;
 import com.ay.restaurant.utils.EmailUtils;
 import com.ay.restaurant.utils.RestaurantUtils;
+import com.google.common.base.Strings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,7 +123,7 @@ public class UserServiceImpl implements UserService {
                 Integer id = Integer.parseInt(requestMap.get("id"));
                 String status = requestMap.get("status");
                 Optional<User> user = userDao.findById(id);
-                if(!user.isEmpty() && !status.isEmpty()) {
+                if(!user.isEmpty() && !Strings.isNullOrEmpty(status)) {
                     userDao.updateStatus(status, id);
                     sendEmailToAllAdmins(status, user.get().getEmail(), userDao.findAdminsEmail());
                     return RestaurantUtils.getResponseEntity("User status updated successfully", HttpStatus.OK);

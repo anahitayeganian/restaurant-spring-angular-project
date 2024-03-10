@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     public ResponseEntity<String> addNewCategory(Map<String,String> requestMap) {
         try {
             if(jwtFilter.isAdmin()) {
-                if(validateCategoryMap(requestMap)) {
+                if(validateCategoryMap(requestMap, false)) {
                     categoryDao.save(getCategoryFromMap(requestMap));
                     return RestaurantUtils.getResponseEntity("Category added successfully", HttpStatus.OK);
                 }
@@ -44,11 +45,12 @@ public class CategoryServiceImpl implements CategoryService {
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private boolean validateCategoryMap(Map<String,String> requestMap) {
-        if(requestMap.containsKey("name"))
-            return true;
-        else
-            return false;
+    private boolean validateCategoryMap(Map<String,String> requestMap, boolean validateId) {
+        if(requestMap.containsKey("name") && !Strings.isNullOrEmpty(requestMap.get("name"))) {
+            if((requestMap.containsKey("id") && validateId) || !validateId)
+                return true;
+        }
+        return false;
     }
 
     private Category getCategoryFromMap(Map<String,String> requestMap) {
@@ -65,6 +67,32 @@ public class CategoryServiceImpl implements CategoryService {
             exception.printStackTrace();
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateCategory(Map<String,String> requestMap) {
+        try {
+            if(jwtFilter.isAdmin()) {
+                if(validateCategoryMap(requestMap, true)) {
+                    Optional<Category> optionalCategorycategory = categoryDao.findById(Integer.parseInt(requestMap.get("id")));
+                    if(!optionalCategorycategory.isEmpty()) {
+                        Category category = optionalCategorycategory.get();
+                        category.setName(requestMap.get("name"));
+                        categoryDao.save(category);
+                        return RestaurantUtils.getResponseEntity("Category added successfully", HttpStatus.OK);
+                    }
+                    else
+                        return RestaurantUtils.getResponseEntity("Category id does not exist", HttpStatus.OK);
+                }
+                else
+                    return RestaurantUtils.getResponseEntity(RestaurantConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+            }
+            else
+                return RestaurantUtils.getResponseEntity(RestaurantConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
