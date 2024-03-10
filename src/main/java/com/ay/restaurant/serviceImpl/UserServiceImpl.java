@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> checkPassword(Map<String,String> requestMap) {
+    public ResponseEntity<String> changePassword(Map<String,String> requestMap) {
         try{
             User currentUser = userDao.findByEmail(jwtFilter.getCurrentUser());
             if(!Objects.isNull(currentUser)) {

@@ -74,7 +74,7 @@ public class UserRestImpl implements UserRest {
     @Override
     public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
         try{
-            return userService.checkPassword(requestMap);
+            return userService.changePassword(requestMap);
         } catch(Exception exception) {
             exception.printStackTrace();
         }
