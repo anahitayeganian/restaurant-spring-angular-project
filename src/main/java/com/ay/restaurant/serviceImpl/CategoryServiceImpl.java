@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private boolean validateCategoryMap(Map<String,String> requestMap, boolean validateId) {
-        if(requestMap.containsKey("name") && !Strings.isNullOrEmpty(requestMap.get("name"))) {
+        if(requestMap.containsKey("name")) {
             if((requestMap.containsKey("id") && validateId) || !validateId)
                 return true;
         }
