@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
-@NamedQuery(name = "Category.findAllCategories", query = "select c from Category c")
+@NamedQuery(name = "Category.findCategories", query = "select c from Category c where c.id in (select i.category.id from Item i where i.status='true')")
 
 @Data
 @NoArgsConstructor

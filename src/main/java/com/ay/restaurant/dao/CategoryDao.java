@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CategoryDao extends JpaRepository<Category, Integer> {
 
-    List<Category> findAllCategories();
+    List<Category> findCategories();
 
 }
