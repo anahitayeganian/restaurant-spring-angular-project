@@ -3,18 +3,21 @@ package com.ay.restaurant.serviceImpl;
 import com.ay.restaurant.constants.RestaurantConstants;
 import com.ay.restaurant.dao.CategoryDao;
 import com.ay.restaurant.dao.ItemDao;
+import com.ay.restaurant.dto.ItemDto;
+import com.ay.restaurant.dto.UserDto;
 import com.ay.restaurant.jwt.JwtFilter;
 import com.ay.restaurant.pojo.Category;
 import com.ay.restaurant.pojo.Item;
 import com.ay.restaurant.service.ItemService;
 import com.ay.restaurant.utils.RestaurantUtils;
-import com.google.common.base.Strings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,6 +68,16 @@ public class ItemServiceImpl implements ItemService {
             item.setCategory(optionalCategory.get());
         }
         return item;
+    }
+
+    @Override
+    public ResponseEntity<List<ItemDto>> getAllItems() {
+        try {
+            return new ResponseEntity<>(itemDao.findAllItems(), HttpStatus.OK);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

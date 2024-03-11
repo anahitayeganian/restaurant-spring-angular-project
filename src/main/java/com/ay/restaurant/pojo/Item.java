@@ -9,6 +9,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
+@NamedQuery(name = "Item.findAllItems", query = "select new com.ay.restaurant.dto.ItemDto(i.id,i.name,i.description,i.price,i.status,i.category.id,i.category.name) from Item i")
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
