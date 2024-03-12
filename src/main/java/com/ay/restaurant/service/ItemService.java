@@ -12,4 +12,6 @@ public interface ItemService {
 
     public ResponseEntity<List<ItemDto>> getAllItems();
 
+    public ResponseEntity<String> updateItem(Map<String,String> requestMap);
+
 }

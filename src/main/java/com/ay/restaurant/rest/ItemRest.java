@@ -19,4 +19,7 @@ public interface ItemRest {
     @GetMapping(path = "/get")
     public ResponseEntity<List<ItemDto>> getAllItems();
 
+    @PostMapping(path = "/update")
+    public ResponseEntity<String> updateItem(@RequestBody(required = true) Map<String,String> requestMap);
+
 }

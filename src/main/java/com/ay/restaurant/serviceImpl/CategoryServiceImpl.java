@@ -74,12 +74,12 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             if(jwtFilter.isAdmin()) {
                 if(validateCategoryMap(requestMap, true)) {
-                    Optional<Category> optionalCategorycategory = categoryDao.findById(Integer.parseInt(requestMap.get("id")));
-                    if(!optionalCategorycategory.isEmpty()) {
-                        Category category = optionalCategorycategory.get();
+                    Optional<Category> optionalCategory = categoryDao.findById(Integer.parseInt(requestMap.get("id")));
+                    if(!optionalCategory.isEmpty()) {
+                        Category category = optionalCategory.get();
                         category.setName(requestMap.get("name"));
                         categoryDao.save(category);
-                        return RestaurantUtils.getResponseEntity("Category added successfully", HttpStatus.OK);
+                        return RestaurantUtils.getResponseEntity("Category updated successfully", HttpStatus.OK);
                     }
                     else
                         return RestaurantUtils.getResponseEntity("Category id does not exist", HttpStatus.OK);

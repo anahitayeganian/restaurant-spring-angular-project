@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
 
     private boolean validateItemMap(Map<String,String> requestMap, boolean validateId) {
         if(requestMap.containsKey("name") && requestMap.containsKey("price") && requestMap.containsKey("categoryId")) {
-            if((requestMap.containsKey("itemId") && validateId) || !validateId)
+            if((requestMap.containsKey("id") && validateId) || !validateId)
                 return true;
         }
         return false;
@@ -62,7 +62,9 @@ public class ItemServiceImpl implements ItemService {
     private Item getItemFromMap(Map<String,String> requestMap, Item item) {
         Optional<Category> optionalCategory = categoryDao.findById(Integer.parseInt(requestMap.get("categoryId")));
         item.setName(requestMap.get("name"));
-        item.setDescription(requestMap.get("description"));
+        if (requestMap.containsKey("description")) {
+            item.setDescription(requestMap.get("description"));
+        }
         item.setPrice(Integer.parseInt(requestMap.get("price")));
         if(!optionalCategory.isEmpty()) {
             item.setCategory(optionalCategory.get());
@@ -78,6 +80,34 @@ public class ItemServiceImpl implements ItemService {
             exception.printStackTrace();
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateItem(Map<String,String> requestMap) {
+        try {
+            if(jwtFilter.isAdmin()) {
+                if(validateItemMap(requestMap, true)) {
+                    Optional<Item> optionalItem = itemDao.findById(Integer.parseInt(requestMap.get("id")));
+                    if(!optionalItem.isEmpty()) {
+                        Item item = getItemFromMap(requestMap, optionalItem.get());
+                        if (requestMap.containsKey("status")) {
+                            item.setStatus(requestMap.get("status"));
+                        }
+                        itemDao.save(item);
+                        return RestaurantUtils.getResponseEntity("Item updated successfully", HttpStatus.OK);
+                    }
+                    else
+                        return RestaurantUtils.getResponseEntity("Item id does not exist", HttpStatus.OK);
+                }
+                else
+                    return RestaurantUtils.getResponseEntity(RestaurantConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+            }
+            else
+                return RestaurantUtils.getResponseEntity(RestaurantConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
