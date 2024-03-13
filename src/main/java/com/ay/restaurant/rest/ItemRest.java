@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(path = "/item")
+@RequestMapping(path = "/items")
 public interface ItemRest {
 
     @PostMapping(path = "/add")
     public ResponseEntity<String> addNewItem(@RequestBody(required = true) Map<String,String> requestMap);
 
-    @GetMapping(path = "/get")
+    @GetMapping(path = "/all")
     public ResponseEntity<List<ItemDto>> getAllItems();
 
     @PostMapping(path = "/update")
@@ -22,7 +22,7 @@ public interface ItemRest {
     @PostMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteItem(@PathVariable Integer id);
 
-    @GetMapping(path = "/getByCategory/{id}")
+    @GetMapping(path = "/category/{id}")
     public ResponseEntity<List<ItemDto>> getByCategory(@PathVariable Integer id);
 
 }
