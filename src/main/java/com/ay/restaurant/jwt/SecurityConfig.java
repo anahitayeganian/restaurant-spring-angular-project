@@ -19,7 +19,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final String[] WHITE_LIST_URL = {"/user/login", "/user/signup", "/user/forgotPassword"};
+    private static final String[] WHITE_LIST_URL = {"/users/login", "/users/signup", "/users/forgotPassword"};
 
     private final JwtFilter jwtFilter;
 

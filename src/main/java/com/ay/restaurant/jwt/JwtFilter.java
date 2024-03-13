@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
     * SecurityContextHolder, and finally it continues the filter chain */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        if(!httpServletRequest.getServletPath().matches("/user/login|/user/signup|/user/forgotPassword")) {
+        if(!httpServletRequest.getServletPath().matches("/users/login|/users/signup|/users/forgotPassword")) {
             final String authorizationHeader = httpServletRequest.getHeader("Authorization");
             String token = null;
             if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
