@@ -25,4 +25,7 @@ public interface ItemRest {
     @GetMapping(path = "/category/{id}")
     public ResponseEntity<List<ItemDto>> getByCategory(@PathVariable Integer id);
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ItemDto> getItem(@PathVariable Integer id);
+
 }

@@ -18,4 +18,6 @@ public interface ItemService {
 
     public ResponseEntity<List<ItemDto>> getByCategory(Integer id);
 
+    public ResponseEntity<ItemDto> getItem(Integer id);
+
 }

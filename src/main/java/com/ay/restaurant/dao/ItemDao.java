@@ -11,5 +11,6 @@ public interface ItemDao extends JpaRepository<Item, Integer> {
 
     List<ItemDto> findAllItems();
     List<ItemDto> findByCategory(@Param("id") Integer id);
+    ItemDto findItemById(@Param("id") Integer id);
 
 }

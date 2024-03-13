@@ -70,4 +70,14 @@ public class ItemRestImpl implements ItemRest {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<ItemDto> getItem(Integer id) {
+        try {
+            return itemService.getItem(id);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new ItemDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

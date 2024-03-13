@@ -140,4 +140,14 @@ public class ItemServiceImpl implements ItemService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<ItemDto> getItem(Integer id) {
+        try {
+            return new ResponseEntity<>(itemDao.findItemById(id), HttpStatus.OK);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new ItemDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
