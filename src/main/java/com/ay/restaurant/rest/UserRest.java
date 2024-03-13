@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/users")
 public interface UserRest {
 
     @PostMapping(path = "/signup")
@@ -19,10 +19,10 @@ public interface UserRest {
     @PostMapping(path = "/login")
     public ResponseEntity<String> login(@RequestBody(required = true) Map<String,String> requestMap);
 
-    @GetMapping(path = "/get")
+    @GetMapping(path = "/all")
     public ResponseEntity<List<UserDto>> getAllUsers();
 
-    @PostMapping(path = "/update")
+    @PostMapping(path = "/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestBody(required = true) Map<String,String> requestMap);
 
     @GetMapping(path = "/checkToken")
