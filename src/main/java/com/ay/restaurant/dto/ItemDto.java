@@ -17,4 +17,9 @@ public class ItemDto {
     private Integer categoryId;
     private String categoryName;
 
+    public ItemDto(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 }
