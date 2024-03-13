@@ -14,4 +14,6 @@ public interface ItemService {
 
     public ResponseEntity<String> updateItem(Map<String,String> requestMap);
 
+    public ResponseEntity<String> deleteItem(Integer id);
+
 }
