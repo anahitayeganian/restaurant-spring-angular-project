@@ -22,4 +22,7 @@ public interface ItemRest {
     @PostMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteItem(@PathVariable Integer id);
 
+    @GetMapping(path = "/getByCategory/{id}")
+    public ResponseEntity<List<ItemDto>> getByCategory(@PathVariable Integer id);
+
 }

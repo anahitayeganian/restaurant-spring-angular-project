@@ -16,4 +16,6 @@ public interface ItemService {
 
     public ResponseEntity<String> deleteItem(Integer id);
 
+    public ResponseEntity<List<ItemDto>> getByCategory(Integer id);
+
 }
