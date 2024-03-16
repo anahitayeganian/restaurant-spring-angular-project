@@ -1,6 +1,7 @@
 package com.ay.restaurant.restImpl;
 
 import com.ay.restaurant.constants.RestaurantConstants;
+import com.ay.restaurant.pojo.Bill;
 import com.ay.restaurant.rest.BillRest;
 import com.ay.restaurant.service.BillService;
 import com.ay.restaurant.utils.RestaurantUtils;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,4 +29,15 @@ public class BillRestImpl implements BillRest {
         }
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<List<Bill>> getBills() {
+        try {
+            return billService.getBills();
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

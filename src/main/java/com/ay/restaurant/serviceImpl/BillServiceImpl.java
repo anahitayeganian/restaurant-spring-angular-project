@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -160,6 +162,22 @@ public class BillServiceImpl implements BillService {
         table.addCell((String) data.get("quantity"));
         table.addCell(Double.toString((Double) data.get("price")));
         table.addCell(Double.toString((Double) data.get("total")));
+    }
+
+    @Override
+    public ResponseEntity<List<Bill>> getBills() {
+        log.info("Inside getBills");
+        try {
+            List<Bill> bills;
+            if(jwtFilter.isAdmin())
+                bills = billDao.findAllBills();
+            else
+                bills = billDao.findBillByUsername(jwtFilter.getCurrentUser());
+            return new ResponseEntity<>(bills, HttpStatus.OK);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
