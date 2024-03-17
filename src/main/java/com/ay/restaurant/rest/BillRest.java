@@ -19,4 +19,7 @@ public interface BillRest {
     @GetMapping(path = "/all")
     ResponseEntity<List<Bill>> getBills();
 
+    @PostMapping(path = "/pdf")
+    ResponseEntity<byte[]> getPdf(@RequestBody(required = true) Map<String,Object> requestMap);
+
 }

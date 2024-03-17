@@ -14,7 +14,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -180,6 +182,29 @@ public class BillServiceImpl implements BillService {
             exception.printStackTrace();
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getPdf(Map<String,Object> requestMap) {
+        log.info("Inside getPdf");
+        try {
+            if(!requestMap.containsKey("uuid"))
+                return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+            String uuid = (String) requestMap.get("uuid");
+            Bill bill = billDao.findByUuid(uuid);
+            if(bill != null && bill.getPdf() != null) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_PDF);
+                headers.setContentDispositionFormData("filename", uuid + ".pdf");
+                headers.setContentLength(bill.getPdf().length);
+                return new ResponseEntity<>(bill.getPdf(), headers, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

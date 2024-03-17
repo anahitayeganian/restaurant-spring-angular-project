@@ -40,4 +40,14 @@ public class BillRestImpl implements BillRest {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<byte[]> getPdf(Map<String,Object> requestMap) {
+        try {
+            return billService.getPdf(requestMap);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

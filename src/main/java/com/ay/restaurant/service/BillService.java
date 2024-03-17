@@ -12,4 +12,6 @@ public interface BillService {
 
     public ResponseEntity<List<Bill>> getBills();
 
+    public ResponseEntity<byte[]> getPdf(Map<String,Object> requestMap);
+
 }
