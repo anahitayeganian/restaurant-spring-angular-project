@@ -18,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,20 +35,25 @@ public class BillServiceImpl implements BillService {
     private final JwtFilter jwtFilter;
 
     /* Generates a PDF report based on the provided request map containing bill details.
-     * This method validates the request map, generates a file name, creates a PDF document, adds content to the document and saves the document to the file system */
+     * This method validates the request map, generates a file name, creates a PDF document, adds content to the document and saves the document to both file system and database */
     @Override
     public ResponseEntity<String> generateReport(Map<String,Object> requestMap) {
         log.info("Inside generateReport");
         try {
             if(validateRequestMap(requestMap)) {
-                String fileName = generateFileName(requestMap);
+                String fileName = RestaurantUtils.getUUID();
+                requestMap.put("uuid", fileName);
                 if(!Strings.isNullOrEmpty(fileName)) {
                     Document document = new Document();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     /* An instance of PdfWriter is associated with a PDF document. It specifies the output stream where the PDF content will be written (it initializes the PDF writing process to the specified file location) */
-                    PdfWriter.getInstance(document, new FileOutputStream(RestaurantConstants.STORE_LOCATION + fileName + ".pdf"));
+                    PdfWriter.getInstance(document, byteArrayOutputStream);
                     document.open();
                     addContentToDocument(document, requestMap);
                     document.close();
+                    // Save the pdf file to the file system
+                    savePdfToFileSystem(byteArrayOutputStream, fileName);
+                    saveBill(requestMap, byteArrayOutputStream.toByteArray());
                     return new ResponseEntity<>("{\"uuid\":\"" + fileName + "\"}", HttpStatus.OK);
                 }
             }
@@ -62,18 +69,6 @@ public class BillServiceImpl implements BillService {
         return requestMap.containsKey("name") && requestMap.containsKey("contactNumber")
                 && requestMap.containsKey("email") && requestMap.containsKey("paymentMethod")
                 && requestMap.containsKey("itemDetails") && requestMap.containsKey("totalAmount");
-    }
-
-    private String generateFileName(Map<String,Object> requestMap) {
-        if (requestMap.containsKey("isGenerated") && !(Boolean) requestMap.get("isGenerated")) {
-            return (String) requestMap.get("uuid");
-        }
-        else {
-            String fileName = RestaurantUtils.getUUID();
-            requestMap.put("uuid", fileName);
-            saveBill(requestMap);
-            return fileName;
-        }
     }
 
     private void addContentToDocument(Document document, Map<String, Object> requestMap) throws Exception {
@@ -137,7 +132,7 @@ public class BillServiceImpl implements BillService {
     }
 
     /* Saves the bill details to the database */
-    private void saveBill(Map<String,Object> requestMap) {
+    private void saveBill(Map<String,Object> requestMap, byte[] pdfData) {
         try {
             Bill bill = new Bill();
             bill.setUuid((String) requestMap.get("uuid"));
@@ -148,6 +143,7 @@ public class BillServiceImpl implements BillService {
             bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
             bill.setItemDetails((String) requestMap.get("itemDetails"));
             bill.setCreatedBy(jwtFilter.getCurrentUser());
+            bill.setPdf(pdfData);
             billDao.save(bill);
         } catch(Exception exception) {
             exception.printStackTrace();
@@ -162,6 +158,12 @@ public class BillServiceImpl implements BillService {
         table.addCell((String) data.get("quantity"));
         table.addCell(Double.toString((Double) data.get("price")));
         table.addCell(Double.toString((Double) data.get("total")));
+    }
+
+    private void savePdfToFileSystem(ByteArrayOutputStream byteArrayOutputStream, String fileName) throws IOException {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(RestaurantConstants.STORE_LOCATION + fileName + ".pdf")) {
+            byteArrayOutputStream.writeTo(fileOutputStream);
+        }
     }
 
     @Override
