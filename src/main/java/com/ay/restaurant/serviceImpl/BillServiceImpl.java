@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -205,6 +206,26 @@ public class BillServiceImpl implements BillService {
             exception.printStackTrace();
         }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteItem(Integer id) {
+        try {
+            if(jwtFilter.isAdmin()) {
+                Optional<Bill> optionalBill = billDao.findById(id);
+                if(!optionalBill.isEmpty()) {
+                    billDao.delete(optionalBill.get());
+                    return RestaurantUtils.getResponseEntity("Bill deleted successfully", HttpStatus.OK);
+                }
+                else
+                    return RestaurantUtils.getResponseEntity("Bill id does not exist", HttpStatus.OK);
+            }
+            else
+                return RestaurantUtils.getResponseEntity(RestaurantConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
