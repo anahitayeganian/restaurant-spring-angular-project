@@ -52,4 +52,8 @@ public class Bill implements Serializable {
     @Column(name = "createdBy")
     private String createdBy;
 
+    @Lob
+    @Column(name = "pdf")
+    private byte[] pdf;
+
 }
