@@ -7,7 +7,9 @@ const VALIDATORS_MESSAGES: any = {
   uppercaseRequired: 'Include an uppercase letter',
   numberRequired: 'Include a number',
   specialCharRequired: 'Include a special character (!*,.?)',
-  minLengthRequired: 'Must be at least 8 characters long'  
+  minLengthRequired: 'Must be at least 8 characters long',
+  passwordsMismatch: 'Passwords do not match',
+  minlength: 'Field is too short'
 }
 
 @Component({
