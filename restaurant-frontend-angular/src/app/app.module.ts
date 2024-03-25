@@ -14,6 +14,7 @@ import { InputValidationComponent } from './components/input-validation/input-va
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { DefaultButtonComponent } from './components/default-button/default-button.component';
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SignupPageComponent } from './components/signup-page/signup-page.compon
     BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    ToastrModule
+    ToastrModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
