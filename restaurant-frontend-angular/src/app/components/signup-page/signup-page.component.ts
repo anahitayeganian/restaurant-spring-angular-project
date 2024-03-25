@@ -13,7 +13,8 @@ export class SignupPageComponent implements OnInit {
   isSubmitted = false;
   returnUrl = '';
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
@@ -23,7 +24,7 @@ export class SignupPageComponent implements OnInit {
       password: ['', [Validators.required, this.validatePassword()]],
       confirmPassword: ['', Validators.required]
     }, {
-      validator: this.checkPasswords
+      validator: this.validateForm
     });
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
   }
@@ -56,6 +57,17 @@ export class SignupPageComponent implements OnInit {
     };
   }
 
+  validateForm(form: FormGroup) {
+    const password = form.controls['password'].value;
+    const confirmPassword = form.controls['confirmPassword'].value;
+    const contactNumber = form.controls['contactNumber'].value;
+
+    if (confirmPassword !== '' && password !== confirmPassword)
+      form.controls['confirmPassword'].setErrors({ passwordsMismatch: true });
+    if (contactNumber !== '' && !/^[0-9]{10,10}$/.test(contactNumber))
+      form.controls['contactNumber'].setErrors({ contactNumber: true });
+  }
+
   get fc() {
     return this.signUpForm.controls;
   }
@@ -64,13 +76,6 @@ export class SignupPageComponent implements OnInit {
     this.isSubmitted = true;
     if (this.signUpForm.invalid)
       return;
-  }
-
-  checkPasswords(group: FormGroup) {
-    const password = group.controls['password'].value;
-    const confirmPassword = group.controls['confirmPassword'].value;
-    if (confirmPassword !== '' && password !== confirmPassword)
-      group.controls['confirmPassword'].setErrors({ passwordsMismatch: true });
   }
 
 }

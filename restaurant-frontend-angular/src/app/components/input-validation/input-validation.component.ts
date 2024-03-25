@@ -9,7 +9,8 @@ const VALIDATORS_MESSAGES: any = {
   specialCharRequired: 'Include a special character (!*,.?)',
   minLengthRequired: 'Must be at least 8 characters long',
   passwordsMismatch: 'Passwords do not match',
-  minlength: 'Field is too short'
+  minlength: 'Field is too short',
+  contactNumber: 'Contact number is not valid'
 }
 
 @Component({
