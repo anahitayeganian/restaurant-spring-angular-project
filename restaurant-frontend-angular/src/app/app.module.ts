@@ -33,7 +33,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    ToastrModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right'
+    }),
     HttpClientModule
   ],
   providers: [],
