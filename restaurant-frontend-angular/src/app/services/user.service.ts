@@ -19,4 +19,8 @@ export class UserService {
     return this.httpClient.post(this.url + "/users/signup", data, this.httpOptions);
   }
 
+  login(data: any) {
+    return this.httpClient.post(this.url + "/users/login", data, this.httpOptions);
+  }
+
 }

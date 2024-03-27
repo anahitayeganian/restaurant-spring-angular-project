@@ -86,7 +86,7 @@ export class SignupPageComponent implements OnInit {
     return this.signUpForm.controls;
   }
 
-  submit() {
+  signup() {
     this.isSubmitted = true;
     if (this.signUpForm.invalid)
       return;

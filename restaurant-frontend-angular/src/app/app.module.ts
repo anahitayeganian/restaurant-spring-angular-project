@@ -15,6 +15,7 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import { DefaultButtonComponent } from './components/default-button/default-button.component';
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     InputValidationComponent,
     TextInputComponent,
     DefaultButtonComponent,
-    SignupPageComponent
+    SignupPageComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
