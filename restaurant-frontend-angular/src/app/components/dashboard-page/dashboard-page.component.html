@@ -1,1 +1,37 @@
-<p>dashboard-page works!</p>
+<div class="container">
+    <div class="sidebar">
+
+    </div>
+
+    <div class="main">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-title">
+                    Total categories
+                </div>
+                <div class="card-value">
+                    {{data.categoryCount}}
+                </div>
+                <button class="card-button" role="button">View</button>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    Total items
+                </div>
+                <div class="card-value">
+                    {{data.itemCount}}
+                </div>
+                <button class="card-button" role="button">View</button>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    Total bills
+                </div>
+                <div class="card-value">
+                    {{data.billCount}}
+                </div>
+                <button class="card-button" role="button">View</button>
+            </div>
+        </div>
+    </div>
+</div>

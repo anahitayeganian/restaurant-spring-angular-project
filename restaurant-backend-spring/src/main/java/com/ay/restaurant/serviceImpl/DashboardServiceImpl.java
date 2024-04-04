@@ -29,9 +29,9 @@ public class DashboardServiceImpl implements DashboardService {
     public ResponseEntity<Map<String,Object>> getDetails() {
         Map<String,Object> map = new HashMap<>();
         try {
-            map.put("category", categoryDao.count());
-            map.put("item", itemDao.count());
-            map.put("bill", billDao.count());
+            map.put("categoryCount", categoryDao.count());
+            map.put("itemCount", itemDao.count());
+            map.put("billCount", billDao.count());
             return new ResponseEntity<>(map, HttpStatus.OK);
         } catch(Exception exception) {
             exception.printStackTrace();
