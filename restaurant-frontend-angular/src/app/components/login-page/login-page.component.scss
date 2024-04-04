@@ -1,16 +1,16 @@
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
     margin-top: 5rem;
 }
 
-.details{
+.details {
     width: 28rem;
+    padding: 0 2rem;
 }
 
-form{
+form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,4 +20,10 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin-top: 3rem;
+    }
 }
