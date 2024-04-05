@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     private final EmailUtils emailUtils;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${application.domain}")
+    @Value("${application.frontend.domain}")
     private String domain;
 
     @Override
@@ -192,6 +192,22 @@ public class UserServiceImpl implements UserService {
 
     private String generateResetToken(String username) {
         return jwtUtils.generateResetToken(username);
+    }
+
+    @Override
+    public ResponseEntity<String> resetPassword(Map<String,String> requestMap) {
+        try{
+            User currentUser = userDao.findByEmail(jwtFilter.getCurrentUser());
+            if(!Objects.isNull(currentUser)) {
+                userDao.updatePassword(passwordEncoder.encode(requestMap.get("newPassword")), currentUser.getId());
+                return RestaurantUtils.getResponseEntity("Password updated successfully", HttpStatus.OK);
+            }
+            else
+                return RestaurantUtils.getResponseEntity("User email does not exist", HttpStatus.OK);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

@@ -22,4 +22,6 @@ public interface UserService {
 
     public ResponseEntity<String> forgotPassword(Map<String,String> requestMap);
 
+    public ResponseEntity<String> resetPassword(Map<String,String> requestMap);
+
 }
