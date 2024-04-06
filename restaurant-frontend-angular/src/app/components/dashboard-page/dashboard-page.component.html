@@ -9,7 +9,7 @@
                 <div class="card-title">
                     Total categories
                 </div>
-                <div class="card-value">
+                <div class="card-value" *ngIf="data">
                     {{data.categoryCount}}
                 </div>
                 <button class="card-button" role="button">View</button>
@@ -18,7 +18,7 @@
                 <div class="card-title">
                     Total items
                 </div>
-                <div class="card-value">
+                <div class="card-value" *ngIf="data">
                     {{data.itemCount}}
                 </div>
                 <button class="card-button" role="button">View</button>
@@ -27,7 +27,7 @@
                 <div class="card-title">
                     Total bills
                 </div>
-                <div class="card-value">
+                <div class="card-value" *ngIf="data">
                     {{data.billCount}}
                 </div>
                 <button class="card-button" role="button">View</button>
