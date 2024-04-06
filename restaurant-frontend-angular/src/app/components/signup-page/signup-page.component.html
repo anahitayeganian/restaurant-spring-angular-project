@@ -7,12 +7,12 @@
             <text-input [control]="this.fc['password']" [showErrors]="isSubmitted" label="Password" type="password"></text-input>
             <text-input [control]="this.fc['confirmPassword']" [showErrors]="isSubmitted" label="Confirm Password" type="password"></text-input>
             <default-button text="Sign up"></default-button>
-            <div class="login">
-                Already a user? &nbsp;
-                <a routerLink="/login" [queryParams]="{returnUrl: returnUrl}">
-                    Login Here
-                </a>
-            </div>
         </form>
+        <div class="login">
+            Already a user? &nbsp;
+            <a routerLink="/login" [queryParams]="{returnUrl: returnUrl}">
+                Login Here
+            </a>
+        </div>
     </div>
 </div>
