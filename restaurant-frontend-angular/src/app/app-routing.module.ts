@@ -6,13 +6,15 @@ import { SignupPageComponent } from './components/signup-page/signup-page.compon
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { RouteGuardService } from './services/route-guard.service';
 import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'login', component: LoginPageComponent},
   {path: 'signup', component: SignupPageComponent},
   {path: 'dashboard', component: DashboardPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
-  {path: 'forgotPassword', component: ForgotPasswordPageComponent}
+  {path: 'forgotPassword', component: ForgotPasswordPageComponent},
+  {path: 'resetPassword', component: ResetPasswordPageComponent}
 ];
 
 @NgModule({

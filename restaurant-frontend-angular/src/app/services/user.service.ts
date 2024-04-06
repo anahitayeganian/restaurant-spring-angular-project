@@ -33,4 +33,9 @@ export class UserService {
     return this.httpClient.post(this.url + "/users/forgotPassword", data, this.httpOptions);
   }
 
+  resetPassword(data: any, token: any): Observable<any> {
+    return this.httpClient.post(this.url + "/users/resetPassword", data,
+    { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }) });
+  }
+
 }

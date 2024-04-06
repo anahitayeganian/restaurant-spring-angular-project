@@ -17,6 +17,7 @@ import { SignupPageComponent } from './components/signup-page/signup-page.compon
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ForgotPasswordPageComponent } from './components/forgot-password-page/f
     DefaultButtonComponent,
     SignupPageComponent,
     DashboardPageComponent,
-    ForgotPasswordPageComponent
+    ForgotPasswordPageComponent,
+    ResetPasswordPageComponent
   ],
   imports: [
     BrowserModule,
