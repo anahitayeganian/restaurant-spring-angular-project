@@ -14,7 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.httpClient = http;
-    this.httpOptions = {headers:new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.retrieveToken()})};
+    this.httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.retrieveToken() }) };
   }
 
   signup(data: any): Observable<any> {
@@ -27,6 +27,10 @@ export class UserService {
 
   checkToken(): Observable<any> {
     return this.httpClient.get(this.url + "/users/checkToken", this.httpOptions);
+  }
+
+  forgotPassword(data: any): Observable<any> {
+    return this.httpClient.post(this.url + "/users/forgotPassword", data, this.httpOptions);
   }
 
 }
