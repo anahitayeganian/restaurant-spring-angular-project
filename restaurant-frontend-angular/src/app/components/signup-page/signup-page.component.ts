@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { PasswordValidator } from 'src/app/shared/password-validator';
 
 @Component({
   selector: 'app-signup-page',
@@ -28,44 +29,12 @@ export class SignupPageComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       contactNumber: ['', Validators.required],
-      password: ['', [Validators.required, this.validatePassword()]],
+      password: ['', [Validators.required, PasswordValidator.validatePassword()]],
       confirmPassword: ['', Validators.required]
     }, {
       validator: this.validateForm
     });
     this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
-  }
-
-  /* Custom validator function for password */
-  validatePassword(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value as string;
-      const errors: ValidationErrors = {};
-      if (!value) {
-        return null;
-      }
-      if (!/^[a-zA-Z0-9!.,*]+$/.test(value)) {
-        errors['passwordPattern'] = true;
-        return errors;
-      }
-      if (!/[A-Z]/.test(value)) {
-        errors['uppercaseRequired'] = true;
-        return errors;
-      }
-      if (!/\d/.test(value)) {
-        errors['numberRequired'] = true;
-        return errors;
-      }
-      if (!/[!*,.?]/.test(value)) {
-        errors['specialCharRequired'] = true;
-        return errors;
-      }
-      if (value.length < 8) {
-        errors['minLengthRequired'] = true;
-        return errors;
-      }
-      return null; // Password meets all criteria
-    };
   }
 
   validateForm(form: FormGroup) {
@@ -108,6 +77,6 @@ export class SignupPageComponent implements OnInit {
         this.toastrService.error(error.error?.message);
       else
         this.toastrService.error(GlobalConstants.genericError);
-    })
+    });
   }
 } 
