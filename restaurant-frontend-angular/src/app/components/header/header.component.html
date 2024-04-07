@@ -3,11 +3,25 @@
         <a routerLink="/" class="logo">Restaurant Management System</a>
         <nav>
             <ul>
-                <li>
+                <li *ngIf="!isAuth">
                     <a routerLink="/signup">Signup</a>
                 </li>
-                <li>
+                <li *ngIf="!isAuth">
                     <a routerLink="/login">Login</a>
+                </li>
+                <li *ngIf="isAuth" class="menu-container">
+                    <a routerLink="/dashboard">
+                        <ion-icon name="person-sharp" class="icon icon-no-fill"></ion-icon>
+                    </a>
+                    <div class="menu">
+                        <a routerLink="/changePassword">Change password</a>
+                        <a>Logout</a>
+                    </div>
+                </li>
+                <li>
+                    <a>
+                        <ion-icon name="bag-outline" class="icon"></ion-icon>
+                    </a>
                 </li>
             </ul>
         </nav>
