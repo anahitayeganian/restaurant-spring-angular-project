@@ -42,4 +42,9 @@ export class UserService {
     return this.httpClient.post(this.url + "/users/changePassword", data, this.httpOptions);
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    window.location.reload();
+  }
+
 }
