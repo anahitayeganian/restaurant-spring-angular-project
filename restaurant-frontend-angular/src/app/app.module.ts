@@ -19,6 +19,7 @@ import { DashboardPageComponent } from './components/dashboard-page/dashboard-pa
 import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 import { IonicModule } from '@ionic/angular';
+import { ChangePasswordPageComponent } from './components/change-password-page/change-password-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { IonicModule } from '@ionic/angular';
     SignupPageComponent,
     DashboardPageComponent,
     ForgotPasswordPageComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
+    ChangePasswordPageComponent
   ],
   imports: [
     BrowserModule,

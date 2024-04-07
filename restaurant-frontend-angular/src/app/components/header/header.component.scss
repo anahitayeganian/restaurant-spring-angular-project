@@ -7,9 +7,10 @@ header {
 
 a {
     color: #af1313;
+    height: 100%;
 }
 
-a:hover {
+li a:hover {
     background-color: #e72929;
     color: white;
     cursor: pointer;

@@ -38,4 +38,8 @@ export class UserService {
     { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }) });
   }
 
+  changePassword(data: any): Observable<any> {
+    return this.httpClient.post(this.url + "/users/changePassword", data, this.httpOptions);
+  }
+
 }
