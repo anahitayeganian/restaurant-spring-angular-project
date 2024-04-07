@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ResetPasswordPageComponent } from './components/reset-password-page/res
       timeOut: 3000,
       positionClass: 'toast-bottom-right'
     }),
-    HttpClientModule
+    HttpClientModule,
+    IonicModule
   ],
   providers: [],
   bootstrap: [AppComponent]
