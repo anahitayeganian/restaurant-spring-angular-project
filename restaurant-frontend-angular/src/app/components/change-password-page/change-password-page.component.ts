@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TokenService } from 'src/app/services/token.service';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { PasswordValidator } from 'src/app/shared/password-validator';
@@ -16,9 +17,12 @@ export class ChangePasswordPageComponent implements OnInit {
   changePasswordForm!: FormGroup;
   isSubmitted = false;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private toastrService: ToastrService) { }
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private toastrService: ToastrService,
+    private tokenService: TokenService) { }
 
   ngOnInit(): void {
+    this.tokenService.handleTokenValidityBeforePageLoad();
+
     this.changePasswordForm = this.formBuilder.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, PasswordValidator.validatePassword()]],

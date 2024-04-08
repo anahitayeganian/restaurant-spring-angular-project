@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
   {path: 'forgotPassword', component: ForgotPasswordPageComponent},
   {path: 'resetPassword', component: ResetPasswordPageComponent},
-  {path: 'changePassword', component: ChangePasswordPageComponent}
+  {path: 'changePassword', component: ChangePasswordPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
 ];
 
 @NgModule({

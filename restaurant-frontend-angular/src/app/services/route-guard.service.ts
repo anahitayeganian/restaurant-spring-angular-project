@@ -34,7 +34,7 @@ export class RouteGuardService {
     }
 
     if (tokenPayload.role == 'user' || tokenPayload.role == 'admin') {
-      if (this.auth.isAuthenticated())
+      if (this.auth.isAuthenticated() && expectedRole == tokenPayload.role)
         return true;
       else {
         this.toastrService.error(GlobalConstants.unauthorized);
