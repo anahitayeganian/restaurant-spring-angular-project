@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import * as jwt_decode from "jwt-decode";
+import { ToastrService } from 'ngx-toastr';
 import { GlobalConstants } from '../shared/global-constants';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RouteGuardService {
 
-  constructor(private auth: AuthService, private router: Router, private toastrService: ToastrService) { }
+  constructor(private router: Router, private toastrService: ToastrService) { }
 
   /* This method checks if the user is authenticated and has the necessary role to access a particular route.
    * If not, it prevents the user from accessing the route and redirects them to the home page while displaying an error message */
@@ -34,7 +34,7 @@ export class RouteGuardService {
     }
 
     if (tokenPayload.role == 'user' || tokenPayload.role == 'admin') {
-      if (this.auth.isAuthenticated() && expectedRole == tokenPayload.role)
+      if (AuthService.isAuthenticated() && expectedRole == tokenPayload.role)
         return true;
       else {
         this.toastrService.error(GlobalConstants.unauthorized);

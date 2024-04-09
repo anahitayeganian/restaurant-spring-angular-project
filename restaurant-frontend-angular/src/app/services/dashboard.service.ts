@@ -14,11 +14,12 @@ export class DashboardService {
   private httpOptions: any;
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    this.httpClient = http;
-    this.httpOptions = {headers:new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.retrieveToken()})};
+    this.httpClient = this.http;
+    this.httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   }
 
   getDetails(): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
     return this.httpClient.get(this.url + "/dashboard/details", this.httpOptions);
   }
 

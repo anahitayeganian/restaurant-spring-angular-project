@@ -12,7 +12,7 @@ export class HeaderComponent {
   constructor(private authService: AuthService, private userService: UserService) { }
 
   get isAuth() {
-    return this.authService.isAuthenticated();
+    return AuthService.isAuthenticated();
   }
 
   logout() {

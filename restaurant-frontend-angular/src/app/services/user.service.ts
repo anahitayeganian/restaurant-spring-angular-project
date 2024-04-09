@@ -12,9 +12,9 @@ export class UserService {
   private httpOptions: any;
   private httpClient: HttpClient;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-    this.httpClient = http;
-    this.httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authService.retrieveToken() }) };
+  constructor(private http: HttpClient) {
+    this.httpClient = this.http;
+    this.httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   }
 
   signup(data: any): Observable<any> {
@@ -25,21 +25,23 @@ export class UserService {
     return this.httpClient.post(this.url + "/users/login", data, this.httpOptions);
   }
 
-  checkToken(): Observable<any> {
-    return this.httpClient.get(this.url + "/users/checkToken", this.httpOptions);
-  }
-
   forgotPassword(data: any): Observable<any> {
     return this.httpClient.post(this.url + "/users/forgotPassword", data, this.httpOptions);
   }
 
   resetPassword(data: any, token: any): Observable<any> {
     return this.httpClient.post(this.url + "/users/resetPassword", data,
-    { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }) });
+      { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }) });
   }
 
   changePassword(data: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
     return this.httpClient.post(this.url + "/users/changePassword", data, this.httpOptions);
+  }
+
+  checkToken(): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.get(this.url + "/users/checkToken", this.httpOptions);
   }
 
   logout() {

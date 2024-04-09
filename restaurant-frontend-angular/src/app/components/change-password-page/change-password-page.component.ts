@@ -18,11 +18,11 @@ export class ChangePasswordPageComponent implements OnInit {
   isSubmitted = false;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private toastrService: ToastrService,
-    private tokenService: TokenService) { }
+    private tokenService: TokenService) {
+    this.tokenService.handleTokenValidityBeforePageLoad();
+  }
 
   ngOnInit(): void {
-    this.tokenService.handleTokenValidityBeforePageLoad();
-
     this.changePasswordForm = this.formBuilder.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, PasswordValidator.validatePassword()]],
