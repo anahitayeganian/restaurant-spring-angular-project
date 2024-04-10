@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IonicModule } from '@ionic/angular';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InputContainerComponent } from './components/input-container/input-container.component';
-import { InputValidationComponent } from './components/input-validation/input-validation.component';
-import { TextInputComponent } from './components/text-input/text-input.component';
-import { DefaultButtonComponent } from './components/default-button/default-button.component';
-import { SignupPageComponent } from './components/signup-page/signup-page.component';
-import { HttpClientModule } from '@angular/common/http';
-import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
-import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
-import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
-import { IonicModule } from '@ionic/angular';
-import { ChangePasswordPageComponent } from './components/change-password-page/change-password-page.component';
-import { CategoryPageComponent } from './components/category-page/category-page.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CategoryPageComponent } from './components/pages/category-page/category-page.component';
+import { ChangePasswordPageComponent } from './components/pages/change-password-page/change-password-page.component';
+import { DashboardPageComponent } from './components/pages/dashboard-page/dashboard-page.component';
+import { ForgotPasswordPageComponent } from './components/pages/forgot-password-page/forgot-password-page.component';
+import { HomePageComponent } from './components/pages/home-page/home-page.component';
+import { LoginPageComponent } from './components/pages/login-page/login-page.component';
+import { ResetPasswordPageComponent } from './components/pages/reset-password-page/reset-password-page.component';
+import { SignupPageComponent } from './components/pages/signup-page/signup-page.component';
+import { DefaultButtonComponent } from './components/partials/default-button/default-button.component';
+import { HeaderComponent } from './components/partials/header/header.component';
+import { InputContainerComponent } from './components/partials/input-container/input-container.component';
+import { InputValidationComponent } from './components/partials/input-validation/input-validation.component';
+import { SidebarComponent } from './components/partials/sidebar/sidebar.component';
+import { TextInputComponent } from './components/partials/text-input/text-input.component';
+
 
 @NgModule({
   declarations: [
