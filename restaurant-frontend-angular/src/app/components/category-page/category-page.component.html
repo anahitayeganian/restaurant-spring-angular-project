@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="sidebar">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <div class="main">
+        <div class="table-container">
+            <div class="title">
+                <h2>Categories</h2>
+            </div>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let category of categories">
+                    <td>{{category.id}}</td>
+                    <td>{{category.name}}</td>
+                    <td>
+                        <a class="icon-background">
+                            <ion-icon name="pencil" class="icon"></ion-icon>
+                        </a>
+                        <a>
+                            <ion-icon name="trash-outline" class="icon"></ion-icon>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <button class="add-button">Add category</button>
+        </div>
+    </div>
+</div>

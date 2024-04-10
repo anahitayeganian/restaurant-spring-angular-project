@@ -20,6 +20,8 @@ import { ForgotPasswordPageComponent } from './components/forgot-password-page/f
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 import { IonicModule } from '@ionic/angular';
 import { ChangePasswordPageComponent } from './components/change-password-page/change-password-page.component';
+import { CategoryPageComponent } from './components/category-page/category-page.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ChangePasswordPageComponent } from './components/change-password-page/c
     DashboardPageComponent,
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
-    ChangePasswordPageComponent
+    ChangePasswordPageComponent,
+    CategoryPageComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

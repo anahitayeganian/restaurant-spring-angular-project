@@ -8,6 +8,7 @@ import { RouteGuardService } from './services/route-guard.service';
 import { ForgotPasswordPageComponent } from './components/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './components/reset-password-page/reset-password-page.component';
 import { ChangePasswordPageComponent } from './components/change-password-page/change-password-page.component';
+import { CategoryPageComponent } from './components/category-page/category-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
   {path: 'forgotPassword', component: ForgotPasswordPageComponent},
   {path: 'resetPassword', component: ResetPasswordPageComponent},
-  {path: 'changePassword', component: ChangePasswordPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
+  {path: 'changePassword', component: ChangePasswordPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
+  {path: 'category', component: CategoryPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
 ];
 
 @NgModule({
