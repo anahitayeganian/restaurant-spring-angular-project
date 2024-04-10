@@ -1,0 +1,14 @@
+li {
+    font-size: 1.2rem;
+    color: white;
+    display: flex;
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0.1rem 0;
+    padding-left: 0.2rem;
+}
+
+li:hover {
+    background: white;
+    color: #ad1111;
+}

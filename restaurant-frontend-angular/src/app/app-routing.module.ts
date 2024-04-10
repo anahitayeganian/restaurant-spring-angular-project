@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'forgotPassword', component: ForgotPasswordPageComponent},
   {path: 'resetPassword', component: ResetPasswordPageComponent},
   {path: 'changePassword', component: ChangePasswordPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
-  {path: 'category', component: CategoryPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
+  {path: 'categories', component: CategoryPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
 ];
 
 @NgModule({
