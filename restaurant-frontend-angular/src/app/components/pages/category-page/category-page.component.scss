@@ -31,7 +31,6 @@
 
 .title {
   font-family: sans-serif;
-  margin-bottom: 0.7rem;
 }
 
 h2 {
@@ -148,6 +147,31 @@ th {
   background: none;
 }
 
+.filter {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: 5rem;
+  width: 29rem;
+}
+
+input {
+  width: 93%;
+  border: none;
+  border-bottom: 0.09rem solid grey;
+  transition: border-bottom 0.15s ease-out;
+  background-color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(175, 175, 175, 0.863);
+  font-size: 0.95rem;
+}
+
 @media (max-width: 600px) {
   .main {
     display: flex;
@@ -158,7 +182,6 @@ th {
 
   .table-container {
     width: 20vw;
-    height: 0vh;
   }
 
   .add-button {
@@ -167,5 +190,14 @@ th {
 
   .sidebar {
     display: none;
+  }
+
+  .filter {
+    width: 85vw;
+  }
+
+  input {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
   }
 }

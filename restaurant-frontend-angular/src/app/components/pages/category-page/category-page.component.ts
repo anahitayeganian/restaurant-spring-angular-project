@@ -17,7 +17,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CategoryPageComponent {
 
-  public categories: Category[] = [];
+  categories: Category[] = [];
+  inputValue: string = '';
+  originalCategories: Category[] = [];
 
   constructor(private tokenService: TokenService, private categoryService: CategoryService, private toastrService: ToastrService,
     private dialog: MatDialog, private router: Router) {
@@ -28,6 +30,8 @@ export class CategoryPageComponent {
   getAllCategories() {
     this.categoryService.getAllCategories().subscribe((response: any) => {
       this.categories = response;
+      /* Save original categories for resetting */
+      this.originalCategories = [...response];
       console.log(response);
     }, (error: any) => {
       console.log(error);
@@ -98,4 +102,22 @@ export class CategoryPageComponent {
         this.toastrService.error(GlobalConstants.genericError);
     });
   }
+
+  /*applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.categories = this.categories.filter(category =>
+      category.name.toLowerCase().includes(filterValue)
+    );
+  }*/
+
+  handleFilterValueChanges() {
+    /* Reset categories to the original list before applying the filter */
+    this.categories = [...this.originalCategories];
+
+    /* Apply the filter based on the input value */
+    this.categories = this.categories.filter(category =>
+      category.name.toLowerCase().includes(this.inputValue.trim().toLowerCase())
+    );
+  }
+
 }

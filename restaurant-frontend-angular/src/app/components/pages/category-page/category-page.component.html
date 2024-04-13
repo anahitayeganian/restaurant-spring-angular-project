@@ -8,6 +8,12 @@
             <div class="title">
                 <h2>Categories</h2>
             </div>
+            <!--<div class="filter">
+                <input type="text" (keyup)="applyFilter($event)" placeholder="Filter">
+            </div>-->
+            <div class="filter">
+                <input type="text" [(ngModel)]="inputValue" (input)="handleFilterValueChanges()" placeholder="Filter">
+            </div>
             <table>
                 <tr>
                     <th>Id</th>
