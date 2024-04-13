@@ -15,7 +15,6 @@ export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
   isSubmitted = false;
   private userService: UserService;
-  private responseMessage: any;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private service: UserService, private toastrService: ToastrService) {
     this.userService = service;

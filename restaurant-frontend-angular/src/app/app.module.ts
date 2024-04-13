@@ -2,12 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicModule } from '@ionic/angular';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CategoryDialogComponent } from './components/dialogs/category-dialog/category-dialog.component';
 import { CategoryPageComponent } from './components/pages/category-page/category-page.component';
 import { ChangePasswordPageComponent } from './components/pages/change-password-page/change-password-page.component';
 import { DashboardPageComponent } from './components/pages/dashboard-page/dashboard-page.component';
@@ -40,7 +48,8 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
     ResetPasswordPageComponent,
     ChangePasswordPageComponent,
     CategoryPageComponent,
-    SidebarComponent
+    SidebarComponent,
+    CategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +61,14 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
       positionClass: 'toast-bottom-right'
     }),
     HttpClientModule,
-    IonicModule
+    IonicModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatToolbarModule,
+    FlexLayoutModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

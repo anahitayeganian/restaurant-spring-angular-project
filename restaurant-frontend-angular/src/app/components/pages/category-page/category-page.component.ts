@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/models/Category';
 import { CategoryService } from 'src/app/services/category.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { CategoryDialogComponent } from '../../dialogs/category-dialog/category-dialog.component';
+import { Router } from '@angular/router';
+import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-category-page',
@@ -14,7 +19,8 @@ export class CategoryPageComponent {
 
   public categories: Category[] = [];
 
-  constructor(private tokenService: TokenService, private categoryService: CategoryService, private toastrService: ToastrService) {
+  constructor(private tokenService: TokenService, private categoryService: CategoryService, private toastrService: ToastrService,
+    private dialog: MatDialog, private router: Router) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.getAllCategories();
   }
@@ -29,6 +35,41 @@ export class CategoryPageComponent {
         this.toastrService.error(error.error?.message);
       else
         this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
+
+  handleAddCategory() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Add'
+    };
+    dialogConfig.width = "25rem";
+    dialogConfig.position = { left: '45%' };
+    const dialogRef = this.dialog.open(CategoryDialogComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    /* This ensures that the newly added category is immediately reflected in the list without requiring a page reload */
+    const sub = dialogRef.componentInstance.onAddCategory.subscribe((response) => {
+      this.getAllCategories();
+    });
+  }
+
+  handleEditCategory(category: Category) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Edit',
+      data: category
+    };
+    dialogConfig.width = "25rem";
+    dialogConfig.position = { left: '45%' };
+    const dialogRef = this.dialog.open(CategoryDialogComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    /* This ensures that the newly added category is immediately reflected in the list without requiring a page reload */
+    const sub = dialogRef.componentInstance.onEditCategory.subscribe((response) => {
+      this.getAllCategories();
     });
   }
 

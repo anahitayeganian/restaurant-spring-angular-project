@@ -19,7 +19,7 @@
                     <td>{{category.name}}</td>
                     <td>
                         <a class="icon-background">
-                            <ion-icon name="pencil" class="icon"></ion-icon>
+                            <ion-icon name="pencil" class="icon" (click)="handleEditCategory(category)"></ion-icon>
                         </a>
                         <a>
                             <ion-icon name="trash-outline" class="icon"></ion-icon>
@@ -27,7 +27,7 @@
                     </td>
                 </tr>
             </table>
-            <button class="add-button">Add category</button>
+            <button class="add-button" (click)="handleAddCategory()">Add category</button>
         </div>
     </div>
 </div>

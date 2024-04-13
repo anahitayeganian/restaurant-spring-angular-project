@@ -17,7 +17,6 @@ export class SignupPageComponent implements OnInit {
   isSubmitted = false;
   returnUrl = '';
   private userService: UserService;
-  private responseMessage: any;
 
   constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router, private service: UserService,
     private toastrService: ToastrService) {
