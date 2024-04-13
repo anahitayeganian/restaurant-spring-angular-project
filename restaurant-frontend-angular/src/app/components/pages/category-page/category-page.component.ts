@@ -73,4 +73,29 @@ export class CategoryPageComponent {
     });
   }
 
+  handleDeleteCategory(category: Category) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete ' + category.name,
+      confirmation: true
+    };
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
+      this.deleteCategory(category.id);
+      dialogRef.close();
+    });
+  }
+
+  deleteCategory(id: number) {
+    this.categoryService.deleteCategory(id, AuthService.retrieveToken()).subscribe((response: any) => {
+      this.getAllCategories();
+      this.toastrService.success(response?.message);
+    }, (error: any) => {
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
 }

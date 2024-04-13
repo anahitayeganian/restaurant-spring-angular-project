@@ -30,6 +30,7 @@ import { InputContainerComponent } from './components/partials/input-container/i
 import { InputValidationComponent } from './components/partials/input-validation/input-validation.component';
 import { SidebarComponent } from './components/partials/sidebar/sidebar.component';
 import { TextInputComponent } from './components/partials/text-input/text-input.component';
+import { ConfirmationComponent } from './components/dialogs/confirmation/confirmation.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
     ChangePasswordPageComponent,
     CategoryPageComponent,
     SidebarComponent,
-    CategoryDialogComponent
+    CategoryDialogComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
