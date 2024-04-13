@@ -23,4 +23,19 @@ export class CategoryService {
     return this.httpClient.get(this.url + "/categories/all", this.httpOptions);
   }
 
+  addCategory(data: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.post(this.url + "/categories/add", data, this.httpOptions);
+  }
+
+  updateCategory(data: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.post(this.url + "/categories/update", data, this.httpOptions);
+  }
+
+  deleteCategory(id: number, token: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.get(this.url + "/categories/delete/"+id, this.httpOptions);
+  }
+
 }

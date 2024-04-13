@@ -19,4 +19,7 @@ public interface CategoryRest {
     @PostMapping(path ="/update")
     public ResponseEntity<String> updateCategory(@RequestBody(required = true) Map<String,String> requestMap);
 
+    @GetMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Integer id);
+
 }

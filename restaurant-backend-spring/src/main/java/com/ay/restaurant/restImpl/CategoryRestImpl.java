@@ -52,4 +52,14 @@ public class CategoryRestImpl implements CategoryRest {
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<String> deleteCategory(Integer id) {
+        try {
+            return categoryService.deleteCategory(id);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
