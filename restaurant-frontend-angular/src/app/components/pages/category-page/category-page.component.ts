@@ -32,7 +32,6 @@ export class CategoryPageComponent {
       this.categories = response;
       /* Save original categories for resetting */
       this.originalCategories = [...response];
-      console.log(response);
     }, (error: any) => {
       console.log(error);
       if (error.error?.message)
@@ -91,7 +90,7 @@ export class CategoryPageComponent {
   }
 
   deleteCategory(id: number) {
-    this.categoryService.deleteCategory(id, AuthService.retrieveToken()).subscribe((response: any) => {
+    this.categoryService.deleteCategory(id).subscribe((response: any) => {
       this.getAllCategories();
       this.toastrService.success(response?.message);
     }, (error: any) => {

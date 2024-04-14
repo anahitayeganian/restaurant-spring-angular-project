@@ -31,6 +31,7 @@ import { InputValidationComponent } from './components/partials/input-validation
 import { SidebarComponent } from './components/partials/sidebar/sidebar.component';
 import { TextInputComponent } from './components/partials/text-input/text-input.component';
 import { ConfirmationComponent } from './components/dialogs/confirmation/confirmation.component';
+import { ItemPageComponent } from './components/pages/item-page/item-page.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ConfirmationComponent } from './components/dialogs/confirmation/confirm
     CategoryPageComponent,
     SidebarComponent,
     CategoryDialogComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ItemPageComponent
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@ export class CategoryService {
   private httpClient: HttpClient;
   private httpOptions: any;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
     this.httpClient = this.http;
     this.httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   }
@@ -33,7 +33,7 @@ export class CategoryService {
     return this.httpClient.post(this.url + "/categories/update", data, this.httpOptions);
   }
 
-  deleteCategory(id: number, token: any): Observable<any> {
+  deleteCategory(id: number): Observable<any> {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
     return this.httpClient.get(this.url + "/categories/delete/"+id, this.httpOptions);
   }
