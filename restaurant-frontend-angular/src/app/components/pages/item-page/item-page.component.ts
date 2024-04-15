@@ -71,4 +71,31 @@ export class ItemPageComponent {
     });
   }
 
+  handleDeleteItem(item: Item) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete ' + item.name,
+      confirmation: true
+    };
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
+      this.deleteItem(item.id);
+      dialogRef.close();
+    });
+  }
+
+  deleteItem(id: number) {
+    this.itemService.deleteItem(id).subscribe((response: any) => {
+      this.getAllItems();
+      this.toastrService.success(response?.message);
+    }, (error: any) => {
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
+
+
 }

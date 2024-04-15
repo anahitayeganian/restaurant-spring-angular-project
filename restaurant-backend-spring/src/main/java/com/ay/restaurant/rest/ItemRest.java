@@ -19,7 +19,7 @@ public interface ItemRest {
     @PostMapping(path = "/update")
     public ResponseEntity<String> updateItem(@RequestBody(required = true) Map<String,String> requestMap);
 
-    @PostMapping(path = "/delete/{id}")
+    @GetMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteItem(@PathVariable Integer id);
 
     @GetMapping(path = "/category/{id}")
