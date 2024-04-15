@@ -33,5 +33,9 @@ export class ItemService {
     return this.httpClient.get(this.url + "/items/delete/"+id, this.httpOptions);
   }
 
+  updateItem(data: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.post(this.url + "/items/update", data, this.httpOptions);
+  }
 
 }

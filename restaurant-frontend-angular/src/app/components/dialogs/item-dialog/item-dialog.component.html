@@ -24,7 +24,8 @@
             
             <div fxLayout="row wrap" class="status">
                 <mat-label>Status</mat-label>
-                <mat-slide-toggle (change)="onStatusChange($event.checked)" matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
+                <mat-slide-toggle *ngIf="dialogData.data" [checked]="dialogData.data.status==='true'" (change)="onStatusChange($event.checked)" matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
+                <mat-slide-toggle *ngIf="!(dialogData.data)" (change)="onStatusChange($event.checked)" matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
             </div>
 
             <div fxLayout="row wrap">

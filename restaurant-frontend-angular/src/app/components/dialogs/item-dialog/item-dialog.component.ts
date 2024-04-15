@@ -88,7 +88,7 @@ export class ItemDialogComponent {
       description: formData.description,
       status: formData.status
     };
-    console.log(data);
+    
     this.itemService.addItem(data).subscribe((response: any) => {
       this.dialogRef.close();
       this.onAddItem.emit();
@@ -105,9 +105,32 @@ export class ItemDialogComponent {
 
   onStatusChange(checked: boolean) {
     this.itemForm.get('status')?.setValue(checked.toString());
-    console.log(this.itemForm.get('status'));
+    this.itemForm.markAsDirty();
   }
 
-  editCategory() {}
+  editCategory() {
+    const formData = this.itemForm.value;
+    const data = {
+      id: this.dialogData.data.id,
+      name: formData.name,
+      categoryId: formData.categoryId,
+      price: formData.price,
+      description: formData.description,
+      status: formData.status
+    };
+
+    this.itemService.updateItem(data).subscribe((response: any) => {
+      this.dialogRef.close();
+      this.onEditItem.emit();
+      this.toastrService.success(response?.message);
+    }, (error: any) => {
+      this.dialogRef.close();
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
 
 }

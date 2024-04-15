@@ -97,5 +97,22 @@ export class ItemPageComponent {
     });
   }
 
+  handleEditItem(item: Item) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Edit',
+      data: item
+    };
+    dialogConfig.width = "25rem";
+    dialogConfig.position = { left: '45%' };
+    const dialogRef = this.dialog.open(ItemDialogComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    /* This ensures that the newly added category is immediately reflected in the list without requiring a page reload */
+    const sub = dialogRef.componentInstance.onEditItem.subscribe((response) => {
+      this.getAllItems();
+    });
+  }
 
 }
