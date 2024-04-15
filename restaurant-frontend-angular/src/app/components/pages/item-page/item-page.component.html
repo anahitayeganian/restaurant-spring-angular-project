@@ -18,6 +18,7 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>Category name</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 <tr *ngFor="let item of items">
@@ -26,6 +27,7 @@
                     <td>{{item.description}}</td>
                     <td>{{item.price}}</td>
                     <td>{{item.categoryName}}</td>
+                    <td>{{item.status}}</td>
                     <td>
                         <div class="actions">
                             <a class="icon-background">
@@ -38,7 +40,7 @@
                     </td>
                 </tr>
             </table>
-            <button class="add-button">Add category</button>
+            <button class="add-button" (click)="handleAddItem()">Add item</button>
         </div>
     </div>
 </div>

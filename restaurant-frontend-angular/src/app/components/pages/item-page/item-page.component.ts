@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Item } from 'src/app/models/Item';
 import { ItemService } from 'src/app/services/item.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { ItemDialogComponent } from '../../dialogs/item-dialog/item-dialog.component';
+import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-item-page',
@@ -41,7 +43,7 @@ export class ItemPageComponent {
   handleFilterValueChanges() {
     /* Reset items to the original list before applying the filter */
     this.items = [...this.originalItems];
-  
+
     /* Apply the filter based on the input value */
     this.items = this.items.filter(item =>
       item.name.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
@@ -50,6 +52,23 @@ export class ItemPageComponent {
       item.description.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
       item.categoryName.toLowerCase().includes(this.inputValue.trim().toLowerCase())
     );
+  }
+
+  handleAddItem() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Add'
+    };
+    dialogConfig.width = "25rem";
+    dialogConfig.position = { left: '45%' };
+    const dialogRef = this.dialog.open(ItemDialogComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    /* This ensures that the newly added category is immediately reflected in the list without requiring a page reload */
+    const sub = dialogRef.componentInstance.onAddItem.subscribe((response) => {
+      this.getAllItems();
+    });
   }
 
 }

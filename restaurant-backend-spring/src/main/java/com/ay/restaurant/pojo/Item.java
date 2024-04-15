@@ -9,7 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
-@NamedQuery(name = "Item.findAllItems", query = "select new com.ay.restaurant.dto.ItemDto(i.id,i.name,i.description,i.price,i.status,i.category.id,i.category.name) from Item i")
+@NamedQuery(name = "Item.findAllItems", query = "select new com.ay.restaurant.dto.ItemDto(i.id,i.name,i.description,i.price,i.status,i.category.id,i.category.name) from Item i order by i.id")
 @NamedQuery(name = "Item.findByCategory", query = "select new com.ay.restaurant.dto.ItemDto(i.id,i.name) from Item i where i.category.id=:id and i.status='true'")
 @NamedQuery(name = "Item.findItemById", query = "select new com.ay.restaurant.dto.ItemDto(i.id,i.name,i.description,i.price,i.status,i.category.id,i.category.name) from Item i where i.id=:id")
 

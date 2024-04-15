@@ -36,7 +36,6 @@ public class ItemServiceImpl implements ItemService {
             if(jwtFilter.isAdmin()) {
                 if(validateItemMap(requestMap, false)) {
                     Item newItem = getItemFromMap(requestMap, new Item());
-                    newItem.setStatus("true");
                     itemDao.save(newItem);
                     return RestaurantUtils.getResponseEntity("Item added successfully", HttpStatus.OK);
                 }
@@ -66,6 +65,7 @@ public class ItemServiceImpl implements ItemService {
             item.setDescription(requestMap.get("description"));
         }
         item.setPrice(Integer.parseInt(requestMap.get("price")));
+        item.setStatus(requestMap.get("status"));
         if(!optionalCategory.isEmpty()) {
             item.setCategory(optionalCategory.get());
         }

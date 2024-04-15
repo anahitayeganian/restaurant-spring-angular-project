@@ -23,4 +23,9 @@ export class ItemService {
     return this.httpClient.get(this.url + "/items/all", this.httpOptions);
   }
 
+  addItem(data: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.post(this.url + "/items/add", data, this.httpOptions);
+  }
+
 }
