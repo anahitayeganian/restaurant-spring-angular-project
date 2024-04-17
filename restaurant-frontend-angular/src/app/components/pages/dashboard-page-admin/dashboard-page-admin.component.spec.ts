@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DashboardPageComponent } from './dashboard-page.component';
+import { DashboardPageAdminComponent } from './dashboard-page-admin.component';
 
 describe('DashboardPageComponent', () => {
-  let component: DashboardPageComponent;
-  let fixture: ComponentFixture<DashboardPageComponent>;
+  let component: DashboardPageAdminComponent;
+  let fixture: ComponentFixture<DashboardPageAdminComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardPageComponent]
+      declarations: [DashboardPageAdminComponent]
     });
-    fixture = TestBed.createComponent(DashboardPageComponent);
+    fixture = TestBed.createComponent(DashboardPageAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

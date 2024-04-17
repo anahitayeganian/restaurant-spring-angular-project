@@ -23,7 +23,8 @@ import { ConfirmationComponent } from './components/dialogs/confirmation/confirm
 import { ItemDialogComponent } from './components/dialogs/item-dialog/item-dialog.component';
 import { CategoryPageComponent } from './components/pages/category-page/category-page.component';
 import { ChangePasswordPageComponent } from './components/pages/change-password-page/change-password-page.component';
-import { DashboardPageComponent } from './components/pages/dashboard-page/dashboard-page.component';
+import { DashboardPageAdminComponent } from './components/pages/dashboard-page-admin/dashboard-page-admin.component';
+import { DashboardPageUserComponent } from './components/pages/dashboard-page-user/dashboard-page-user.component';
 import { ForgotPasswordPageComponent } from './components/pages/forgot-password-page/forgot-password-page.component';
 import { HomePageComponent } from './components/pages/home-page/home-page.component';
 import { ItemPageComponent } from './components/pages/item-page/item-page.component';
@@ -49,7 +50,8 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
     TextInputComponent,
     DefaultButtonComponent,
     SignupPageComponent,
-    DashboardPageComponent,
+    DashboardPageAdminComponent,
+    DashboardPageUserComponent,
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
     ChangePasswordPageComponent,

@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
 @Component({
-  selector: 'app-dashboard-page',
-  templateUrl: './dashboard-page.component.html',
-  styleUrls: ['./dashboard-page.component.scss']
+  selector: 'app-dashboard-page-admin',
+  templateUrl: './dashboard-page-admin.component.html',
+  styleUrls: ['./dashboard-page-admin.component.scss']
 })
-export class DashboardPageComponent {
+export class DashboardPageAdminComponent {
 
   data: any;
 
   constructor(private dashboardService: DashboardService, private toastrService: ToastrService, private tokenService: TokenService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.dashboardData();
+    //this.role = AuthService.retrieveTokenRole();
   }
 
   dashboardData() {

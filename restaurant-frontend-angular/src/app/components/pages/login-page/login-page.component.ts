@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 
@@ -44,7 +45,10 @@ export class LoginPageComponent implements OnInit {
 
     this.userService.login(data).subscribe((response: any) => {
       localStorage.setItem('token', response.token);
-      this.router.navigate(['/dashboard']);
+      if(AuthService.retrieveTokenRole() === 'admin')
+        this.router.navigate(['/admin/dashboard']);
+      else
+        this.router.navigate(['/dashboard']);
     }, (error) => {
       if (error.error?.message)
         this.toastrService.error(error.error?.message);
