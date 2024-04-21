@@ -8,10 +8,12 @@ import com.ay.restaurant.utils.RestaurantUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +25,20 @@ public class ItemRestImpl implements ItemRest {
     private final ItemService itemService;
 
     @Override
-    public ResponseEntity<String> addNewItem(Map<String,String> requestMap) {
+    public ResponseEntity<Object> addNewItem(Map<String,String> requestMap) {
+        Map<String, Object> responseBody = new HashMap<>();
         try {
             return itemService.addNewItem(requestMap);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return RestaurantUtils.getResponseEntityObject(responseBody, RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> addImageToItem(Integer id, byte[] imageBytes) {
+        try {
+            return itemService.addImageToItem(id, imageBytes);
         } catch(Exception exception) {
             exception.printStackTrace();
         }

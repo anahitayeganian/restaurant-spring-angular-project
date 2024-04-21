@@ -15,11 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -31,23 +30,28 @@ public class ItemServiceImpl implements ItemService {
     private final CategoryDao categoryDao;
 
     @Override
-    public ResponseEntity<String> addNewItem(Map<String,String> requestMap) {
+    public ResponseEntity<Object> addNewItem(Map<String,String> requestMap) {
+        Map<String, Object> responseBody = new HashMap<>();
         try {
             if(jwtFilter.isAdmin()) {
                 if(validateItemMap(requestMap, false)) {
                     Item newItem = getItemFromMap(requestMap, new Item());
-                    itemDao.save(newItem);
-                    return RestaurantUtils.getResponseEntity("Item added successfully", HttpStatus.OK);
+                    Item createdItem = itemDao.save(newItem);
+
+                    /* Response */
+                    responseBody.put("message", "Item added successfully");
+                    responseBody.put("id", createdItem.getId());
+                    return ResponseEntity.ok().body(responseBody);
                 }
                 else
-                    return RestaurantUtils.getResponseEntity(RestaurantConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+                    return RestaurantUtils.getResponseEntityObject(responseBody, RestaurantConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
             }
             else
-                return RestaurantUtils.getResponseEntity(RestaurantConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+                return RestaurantUtils.getResponseEntityObject(responseBody, RestaurantConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
         } catch(Exception exception) {
             exception.printStackTrace();
         }
-        return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return RestaurantUtils.getResponseEntityObject(responseBody, RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateItemMap(Map<String,String> requestMap, boolean validateId) {
@@ -70,6 +74,31 @@ public class ItemServiceImpl implements ItemService {
             item.setCategory(optionalCategory.get());
         }
         return item;
+    }
+
+    @Override
+    public ResponseEntity<String> addImageToItem(Integer id, byte[] imageBytes) {
+        try {
+            Optional<Item> optionalItem = itemDao.findById(id);
+            if (optionalItem.isPresent()) {
+                Item item = optionalItem.get();
+                //System.out.println("Image data length: " + imageBytes.length);
+                if(imageBytes != null && imageBytes.length > 0) {
+                    item.setImage(imageBytes);
+                    itemDao.save(item);
+                    return RestaurantUtils.getResponseEntity("Image added successfully", HttpStatus.OK);
+                }
+                else {
+                    return RestaurantUtils.getResponseEntity("Image file is empty", HttpStatus.BAD_REQUEST);
+                }
+            }
+            else {
+                return RestaurantUtils.getResponseEntity("Item id does not exist", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override

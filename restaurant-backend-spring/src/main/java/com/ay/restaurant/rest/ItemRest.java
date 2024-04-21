@@ -1,8 +1,10 @@
 package com.ay.restaurant.rest;
 
 import com.ay.restaurant.dto.ItemDto;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,10 @@ import java.util.Map;
 public interface ItemRest {
 
     @PostMapping(path = "/add")
-    public ResponseEntity<String> addNewItem(@RequestBody(required = true) Map<String,String> requestMap);
+    public ResponseEntity<Object> addNewItem(@RequestBody(required = true) Map<String,String> requestMap);
+
+    @PostMapping(path = "/addImage/{id}")
+    public ResponseEntity<String> addImageToItem(@PathVariable Integer id, @RequestBody byte[] imageBytes);
 
     @GetMapping(path = "/all")
     public ResponseEntity<List<ItemDto>> getAllItems();

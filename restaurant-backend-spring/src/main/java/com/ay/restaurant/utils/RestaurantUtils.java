@@ -21,6 +21,11 @@ public class RestaurantUtils {
         return new ResponseEntity<String>("{\"message\":\"" + responseMessage + "\"}", httpStatus);
     }
 
+    public static ResponseEntity<Object> getResponseEntityObject(Map<String, Object> responseBody, String message, HttpStatus httpStatus) {
+        responseBody.put("message", message);
+        return ResponseEntity.status(httpStatus).body(responseBody);
+    }
+
     /* Generates a unique identifier (UUID) based on the current time to ensure each bill has a distinct identifier */
     public static String getUUID() {
         Date date = new Date();
