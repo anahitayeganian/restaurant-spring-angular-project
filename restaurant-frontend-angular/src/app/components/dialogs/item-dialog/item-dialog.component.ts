@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/models/Category';
 import { CategoryService } from 'src/app/services/category.service';
@@ -21,6 +20,7 @@ export class ItemDialogComponent {
   dialogAction: string = "Add";
   action: string = "Add";
   categories: Category[] = [];
+  selectedFileName: string = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any, private formBuilder: FormBuilder, private itemService: ItemService, private categoryService: CategoryService,
     public dialogRef: MatDialogRef<ItemDialogComponent>, private toastrService: ToastrService) { }
@@ -31,7 +31,8 @@ export class ItemDialogComponent {
       categoryId: ['', Validators.required],
       price: ['', Validators.required],
       description: [null],
-      status: ['false']
+      status: ['false'],
+      image: ['']
     }, {
       validator: this.validateForm
     });
@@ -52,7 +53,7 @@ export class ItemDialogComponent {
       form.controls['name'].setErrors({ namePattern: true });
     if (price !== '' && !/^\d+(\.\d+)?$/.test(price))
       form.controls['price'].setErrors({ pricePattern: true });
-    if (description !== '' && !/^[a-zA-Z\s(),]+$/.test(description))
+    if (description !== '' && !/^[\p{L}\s(),\-']+$/u.test(description))
       form.controls['description'].setErrors({ descriptionPattern: true });
   }
 
@@ -74,12 +75,12 @@ export class ItemDialogComponent {
 
   handleSubmit() {
     if (this.dialogAction === "Edit")
-      this.editCategory();
+      this.editItem();
     else
-      this.addCategory();
+      this.addItem();
   }
 
-  addCategory() {
+  addItem() {
     const formData = this.itemForm.value;
     const data = {
       name: formData.name,
@@ -88,13 +89,26 @@ export class ItemDialogComponent {
       description: formData.description,
       status: formData.status
     };
-    
+
     this.itemService.addItem(data).subscribe((response: any) => {
+      this.toastrService.success(response?.message);
+      this.addImage(response.id);
       this.dialogRef.close();
       this.onAddItem.emit();
-      this.toastrService.success(response?.message);
     }, (error: any) => {
       this.dialogRef.close();
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
+
+  addImage(id: number) {
+    this.itemService.addImageToItem(id, this.itemForm.value.image).subscribe((response: any) => {
+      this.toastrService.success(response?.message);
+    }, (error: any) => {
       console.error(error);
       if (error.error?.message)
         this.toastrService.error(error.error?.message);
@@ -108,7 +122,7 @@ export class ItemDialogComponent {
     this.itemForm.markAsDirty();
   }
 
-  editCategory() {
+  editItem() {
     const formData = this.itemForm.value;
     const data = {
       id: this.dialogData.data.id,
@@ -120,9 +134,10 @@ export class ItemDialogComponent {
     };
 
     this.itemService.updateItem(data).subscribe((response: any) => {
+      this.toastrService.success(response?.message);
+      this.addImage(data.id);
       this.dialogRef.close();
       this.onEditItem.emit();
-      this.toastrService.success(response?.message);
     }, (error: any) => {
       this.dialogRef.close();
       console.error(error);
@@ -131,6 +146,15 @@ export class ItemDialogComponent {
       else
         this.toastrService.error(GlobalConstants.genericError);
     });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFileName = file.name;
+      this.itemForm.get('image')?.setValue(file);
+      this.itemForm.markAsDirty();
+    }
   }
 
 }

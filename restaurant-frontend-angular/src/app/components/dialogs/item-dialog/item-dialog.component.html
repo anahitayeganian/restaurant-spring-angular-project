@@ -21,11 +21,14 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            
+
             <div fxLayout="row wrap" class="status">
                 <mat-label>Status</mat-label>
-                <mat-slide-toggle *ngIf="dialogData.data" [checked]="dialogData.data.status==='true'" (change)="onStatusChange($event.checked)" matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
-                <mat-slide-toggle *ngIf="!(dialogData.data)" (change)="onStatusChange($event.checked)" matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
+                <mat-slide-toggle *ngIf="dialogData.data" [checked]="dialogData.data.status==='true'"
+                    (change)="onStatusChange($event.checked)"
+                    matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
+                <mat-slide-toggle *ngIf="!(dialogData.data)" (change)="onStatusChange($event.checked)"
+                    matTooltip="Activate or Deactivate Item"></mat-slide-toggle>
             </div>
 
             <div fxLayout="row wrap">
@@ -58,12 +61,18 @@
                 </mat-form-field>
             </div>
 
+            <div fxLayout="row wrap">
+                <input type="file" (change)="onFileSelected($event)" accept="image/*">
+                <mat-error *ngIf="selectedFileName === ''">Please select an image</mat-error>
+            </div>
+
         </div>
     </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()" [disabled]="!(itemForm.valid && itemForm.dirty)">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(itemForm.valid && itemForm.dirty)">
         <mat-icon>save</mat-icon> {{action}}
     </button>
     <button mat-raised-button color="warn" mat-dialog-close>

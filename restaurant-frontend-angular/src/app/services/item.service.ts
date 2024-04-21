@@ -28,14 +28,33 @@ export class ItemService {
     return this.httpClient.post(this.url + "/items/add", data, this.httpOptions);
   }
 
+  addImageToItem(id: number, image: File): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + AuthService.retrieveToken(),
+      'Content-Type': image.type
+    });
+
+    return this.httpClient.post(this.url + "/items/addImage/"+id, image, { headers });
+  }
+
   deleteItem(id: number): Observable<any> {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
-    return this.httpClient.get(this.url + "/items/delete/"+id, this.httpOptions);
+    return this.httpClient.get(this.url + "/items/delete/" + id, this.httpOptions);
   }
 
   updateItem(data: any): Observable<any> {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
     return this.httpClient.post(this.url + "/items/update", data, this.httpOptions);
+  }
+
+  getItemsByCategory(categoryId: number) {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.get(this.url + "/items/category/" + categoryId, this.httpOptions);
+  }
+
+  getItemById(id: number) {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.get(this.url + "/items/" + id, this.httpOptions);
   }
 
 }

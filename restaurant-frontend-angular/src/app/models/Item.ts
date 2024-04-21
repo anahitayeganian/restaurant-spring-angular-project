@@ -1,3 +1,5 @@
+import { FileHandle } from "./file-handle.model";
+
 export class Item {
 	id!: number;
 	name!: string;
@@ -6,4 +8,5 @@ export class Item {
 	status!: string;
 	categoryId!: number;
 	categoryName!: string;
+	image!: Uint8Array;
 }
