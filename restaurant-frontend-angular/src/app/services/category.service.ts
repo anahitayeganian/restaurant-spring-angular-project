@@ -38,4 +38,9 @@ export class CategoryService {
     return this.httpClient.get(this.url + "/categories/delete/"+id, this.httpOptions);
   }
 
+  getFilteredCategories(): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.get(this.url + "/categories/all?filterList=true", this.httpOptions);
+  }
+
 }

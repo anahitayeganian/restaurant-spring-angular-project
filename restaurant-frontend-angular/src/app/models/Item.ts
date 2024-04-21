@@ -9,4 +9,5 @@ export class Item {
 	categoryId!: number;
 	categoryName!: string;
 	image!: Uint8Array;
+	itemImages!: FileHandle[];
 }

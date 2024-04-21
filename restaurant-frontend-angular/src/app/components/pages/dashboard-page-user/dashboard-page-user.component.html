@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="sidebar">
+      <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="main">
+    <div *ngFor="let category of filteredCategories" id="category-container">
+      <h3>{{category.name}}</h3>
+      <ul>
+        <li *ngFor="let item of itemsGroupedByCategory.get(category.id)">
+          <div class="card">
+            <img [src]="item.itemImages[0].url" alt="{{ item.name }}" class="card-image" />
+            <div class="content">
+              <div class="content-item" id="name">{{item.name}}</div>
+              <div class="content-item" id="description">{{item.description}}</div>
+              <div class="content-item" id="price">
+                <span>{{item.price | currency}}</span>
+              </div>
+              <div class="content-item">
+                <button class="addtocart">
+                  <div class="text">
+                    <ion-icon name="cart-outline"></ion-icon> ADD TO CART
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

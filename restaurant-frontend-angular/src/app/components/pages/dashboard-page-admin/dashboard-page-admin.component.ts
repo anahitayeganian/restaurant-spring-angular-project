@@ -17,7 +17,6 @@ export class DashboardPageAdminComponent {
   constructor(private dashboardService: DashboardService, private toastrService: ToastrService, private tokenService: TokenService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.dashboardData();
-    //this.role = AuthService.retrieveTokenRole();
   }
 
   dashboardData() {

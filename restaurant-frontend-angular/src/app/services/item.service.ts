@@ -52,6 +52,11 @@ export class ItemService {
     return this.httpClient.get(this.url + "/items/category/" + categoryId, this.httpOptions);
   }
 
+  getItemsGroupedByCategory(categoryIds: number[]) {
+      this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+      return this.httpClient.post(this.url + "/items/groupedBy", categoryIds, this.httpOptions);
+  }
+
   getItemById(id: number) {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
     return this.httpClient.get(this.url + "/items/" + id, this.httpOptions);
