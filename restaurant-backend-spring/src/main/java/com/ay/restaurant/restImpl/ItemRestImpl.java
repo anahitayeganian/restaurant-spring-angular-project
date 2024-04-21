@@ -86,6 +86,16 @@ public class ItemRestImpl implements ItemRest {
     }
 
     @Override
+    public ResponseEntity<Map<Integer, List<ItemDto>>> getItemsGroupedByCategory(List<Integer> categoryIds) {
+        try {
+            return itemService.getItemsGroupedByCategory(categoryIds);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
     public ResponseEntity<ItemDto> getItem(Integer id) {
         try {
             return itemService.getItem(id);

@@ -30,6 +30,9 @@ public interface ItemRest {
     @GetMapping(path = "/category/{id}")
     public ResponseEntity<List<ItemDto>> getByCategory(@PathVariable Integer id);
 
+    @PostMapping(path = "/groupedBy")
+    public ResponseEntity<Map<Integer, List<ItemDto>>> getItemsGroupedByCategory(@RequestBody(required = true) List<Integer> categoryIds);
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<ItemDto> getItem(@PathVariable Integer id);
 

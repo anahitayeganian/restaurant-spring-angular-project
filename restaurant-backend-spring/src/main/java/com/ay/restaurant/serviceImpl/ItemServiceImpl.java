@@ -170,6 +170,21 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public ResponseEntity<Map<Integer, List<ItemDto>>> getItemsGroupedByCategory(List<Integer> categoryIds) {
+        try {
+            Map<Integer, List<ItemDto>> groupedItems = new HashMap<>();
+            /* For each category id, call itemDao.findByCategory(id) and put the result in the map */
+            for(Integer id : categoryIds) {
+                groupedItems.put(id, itemDao.findByCategory(id));
+            }
+            return new ResponseEntity<>(groupedItems, HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
     public ResponseEntity<ItemDto> getItem(Integer id) {
         try {
             return new ResponseEntity<>(itemDao.findItemById(id), HttpStatus.OK);

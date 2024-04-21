@@ -22,6 +22,8 @@ public interface ItemService {
 
     public ResponseEntity<List<ItemDto>> getByCategory(Integer id);
 
+    public ResponseEntity<Map<Integer, List<ItemDto>>> getItemsGroupedByCategory(List<Integer> categoryIds);
+
     public ResponseEntity<ItemDto> getItem(Integer id);
 
 }
