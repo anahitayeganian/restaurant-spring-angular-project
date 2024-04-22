@@ -11,6 +11,7 @@ import { LoginPageComponent } from './components/pages/login-page/login-page.com
 import { ResetPasswordPageComponent } from './components/pages/reset-password-page/reset-password-page.component';
 import { SignupPageComponent } from './components/pages/signup-page/signup-page.component';
 import { RouteGuardService } from './services/route-guard.service';
+import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'resetPassword', component: ResetPasswordPageComponent},
   {path: 'changePassword', component: ChangePasswordPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
   {path: 'categories', component: CategoryPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}},
-  {path: 'items', component: ItemPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}}
+  {path: 'items', component: ItemPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}},
+  {path: 'cart', component: CartPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['user']}}
 ];
 
 @NgModule({

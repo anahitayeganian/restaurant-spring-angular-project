@@ -37,6 +37,7 @@ import { InputContainerComponent } from './components/partials/input-container/i
 import { InputValidationComponent } from './components/partials/input-validation/input-validation.component';
 import { SidebarComponent } from './components/partials/sidebar/sidebar.component';
 import { TextInputComponent } from './components/partials/text-input/text-input.component';
+import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
     CategoryDialogComponent,
     ConfirmationComponent,
     ItemPageComponent,
-    ItemDialogComponent
+    ItemDialogComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,

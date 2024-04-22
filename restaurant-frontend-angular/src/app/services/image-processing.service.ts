@@ -13,7 +13,6 @@ export class ImageProcessingService {
   /* This method takes an item object containing a base64 encoded image, converts it to a Blob object and creates a sanitized
    * URL for displaying the image */
   public createImage(item: Item): Item {
-    console.log("item at start: " + JSON.stringify(item));
     const itemImagesToFileHandle: FileHandle[] = [];
 
     const imageBlob = this.dataURItoBlob(item.image, "image/jpeg");
@@ -26,7 +25,6 @@ export class ImageProcessingService {
     itemImagesToFileHandle.push(finalFileHandle);
 
     item.itemImages = itemImagesToFileHandle;
-    console.log("item.itemImages at the end: " + item.itemImages);
     return item;
   }
 
