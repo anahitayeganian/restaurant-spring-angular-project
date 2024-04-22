@@ -1,6 +1,6 @@
 <div class="container">
   <div class="sidebar">
-      <app-sidebar></app-sidebar>
+    <app-sidebar></app-sidebar>
   </div>
 
   <div class="main">
@@ -9,6 +9,8 @@
       <ul>
         <li *ngFor="let item of itemsGroupedByCategory.get(category.id)">
           <div class="card">
+            <!-- Another way to display images without uploading them to the database but just fetching them dynamically from the assets/images folder
+              <img [src]="'assets/images/' + removeSpacesAndUppercase(item.name) + '.jpg'" alt="{{item.name}}" class="card-image" />-->
             <img [src]="item.itemImages[0].url" alt="{{item.name}}" class="card-image" />
             <div class="content">
               <div class="content-item" id="name">{{item.name}}</div>

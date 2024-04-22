@@ -66,4 +66,9 @@ export class DashboardPageUserComponent {
     this.cartService.addToCart(item);
   }
 
+  removeSpacesAndUppercase(name: string): string {
+    /* Remove spaces and convert to lowercase*/
+    return name.replace(/\s+/g, '-').toLowerCase();
+  }
+
 }
