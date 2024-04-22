@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TokenService } from './token.service';
+import { RouteGuardService } from '../route-guard.service';
 
-describe('TokenService', () => {
-  let service: TokenService;
+describe('RouteGuardService', () => {
+  let service: RouteGuardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TokenService);
+    service = TestBed.inject(RouteGuardService);
   });
 
   it('should be created', () => {

@@ -11,6 +11,6 @@ export const sample_foods: Food[] = [
         id: 2,
         name: 'Tiramisù',
         price: 8,
-        imageUrl: '/assets/images/tiramisu.jpg'
+        imageUrl: '/assets/images/tiramisù.jpg'
       }
 ];
