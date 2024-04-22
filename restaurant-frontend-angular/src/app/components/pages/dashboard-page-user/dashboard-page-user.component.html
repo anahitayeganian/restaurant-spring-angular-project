@@ -9,7 +9,7 @@
       <ul>
         <li *ngFor="let item of itemsGroupedByCategory.get(category.id)">
           <div class="card">
-            <img [src]="item.itemImages[0].url" alt="{{ item.name }}" class="card-image" />
+            <img [src]="item.itemImages[0].url" alt="{{item.name}}" class="card-image" />
             <div class="content">
               <div class="content-item" id="name">{{item.name}}</div>
               <div class="content-item" id="description">{{item.description}}</div>
@@ -17,7 +17,7 @@
                 <span>{{item.price | currency}}</span>
               </div>
               <div class="content-item">
-                <button class="addtocart">
+                <button class="addtocart" (click)="addToCart(item)">
                   <div class="text">
                     <ion-icon name="cart-outline"></ion-icon> ADD TO CART
                   </div>

@@ -8,6 +8,7 @@ import { ItemService } from 'src/app/services/item.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { map } from 'rxjs/operators';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-dashboard-page-user',
@@ -20,7 +21,7 @@ export class DashboardPageUserComponent {
   itemsGroupedByCategory: Map<number, Item[]> = new Map<number, Item[]>();
 
   constructor(private tokenService: TokenService, private categoryService: CategoryService, private itemService: ItemService, private toastrService: ToastrService,
-    private imageProcessingService: ImageProcessingService) {
+    private imageProcessingService: ImageProcessingService, private cartService: CartService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.getFilteredCategories();
   }
@@ -60,4 +61,9 @@ export class DashboardPageUserComponent {
     const categoryIds = this.filteredCategories.map(category => category.id);
     return categoryIds;
   }
+
+  addToCart(item: Item) {
+    this.cartService.addToCart(item);
+  }
+
 }
