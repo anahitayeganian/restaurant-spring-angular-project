@@ -54,7 +54,7 @@ export class CartService {
     return this.cartSubject.asObservable();
   }
 
-  /* Returns the current value of the cart subject */
+  /* Returns the current/latest value of the cart subject */
   getCart(): Cart{
     return this.cartSubject.value;
   }

@@ -38,6 +38,8 @@ import { InputValidationComponent } from './components/partials/input-validation
 import { SidebarComponent } from './components/partials/sidebar/sidebar.component';
 import { TextInputComponent } from './components/partials/text-input/text-input.component';
 import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
+import { CheckoutPageComponent } from './components/pages/checkout-page/checkout-page.component';
+import { OrderProductsListComponent } from './components/partials/order-products-list/order-products-list.component';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { CartPageComponent } from './components/pages/cart-page/cart-page.compon
     ConfirmationComponent,
     ItemPageComponent,
     ItemDialogComponent,
-    CartPageComponent
+    CartPageComponent,
+    CheckoutPageComponent,
+    OrderProductsListComponent
   ],
   imports: [
     BrowserModule,

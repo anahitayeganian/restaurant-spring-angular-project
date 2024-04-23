@@ -6,6 +6,7 @@ const VALIDATORS_MESSAGES: any = {
   email: 'Email is not valid',
   namePattern: 'Name is not valid',
   contactNumberPattern: 'Contact number is not valid',
+  addressPattern: 'Address is not valid',
   passwordPattern: 'Password is not valid',
   uppercaseRequired: 'Include an uppercase letter',
   numberRequired: 'Include a number',

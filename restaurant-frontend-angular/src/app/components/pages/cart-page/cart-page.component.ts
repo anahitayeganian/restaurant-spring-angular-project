@@ -3,6 +3,7 @@ import { Cart } from 'src/app/models/Cart';
 import { CartProduct } from 'src/app/models/CartProduct';
 import { CartService } from 'src/app/services/cart.service';
 import { ImageProcessingService } from 'src/app/services/image-processing.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -13,7 +14,8 @@ export class CartPageComponent implements OnInit {
 
   cart!: Cart;
 
-  constructor(private cartService: CartService, private imageProcessingService: ImageProcessingService) {
+  constructor(private cartService: CartService, private imageProcessingService: ImageProcessingService, tokenService: TokenService) {
+    tokenService.handleTokenValidityBeforePageLoad();
     /* Update the cart every time we have a new value */
     this.cartService.getCartObservable().subscribe((cart) => {
       this.cart = cart;
