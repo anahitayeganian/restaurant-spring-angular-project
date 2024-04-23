@@ -40,6 +40,9 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "password")
     private String password;
 

@@ -210,4 +210,15 @@ public class UserServiceImpl implements UserService {
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<UserDto> getCurrentUser() {
+        UserDto userDto = new UserDto(customUserDetailsService.getUserDetail());
+        try {
+            return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>(userDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

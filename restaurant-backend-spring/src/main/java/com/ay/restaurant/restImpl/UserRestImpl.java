@@ -103,4 +103,14 @@ public class UserRestImpl implements UserRest {
         return RestaurantUtils.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<UserDto> getCurrentUser() {
+        try{
+            return userService.getCurrentUser();
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<UserDto>(new UserDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

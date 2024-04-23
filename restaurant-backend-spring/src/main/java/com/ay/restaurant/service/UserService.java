@@ -24,4 +24,6 @@ public interface UserService {
 
     public ResponseEntity<String> resetPassword(Map<String,String> requestMap);
 
+    public ResponseEntity<UserDto> getCurrentUser();
+
 }

@@ -37,4 +37,7 @@ public interface UserRest {
     @PostMapping(path = "/resetPassword")
     public ResponseEntity<String> resetPassword(@RequestBody(required = true) Map<String,String> requestMap);
 
+    @GetMapping(path = "/currentUser")
+    public ResponseEntity<UserDto> getCurrentUser();
+
 }

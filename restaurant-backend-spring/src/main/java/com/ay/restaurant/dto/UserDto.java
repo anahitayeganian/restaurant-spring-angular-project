@@ -1,5 +1,6 @@
 package com.ay.restaurant.dto;
 
+import com.ay.restaurant.pojo.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ public class UserDto {
     private Integer id;
     private String name;
     private String email;
+    private String address;
     private String contactNumber;
     private String status;
     private String role;
@@ -22,4 +24,13 @@ public class UserDto {
         this.status = status;
         this.role = role;
     }
+
+    public UserDto(User user) {
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.address = user.getAddress();
+        this.contactNumber = user.getContactNumber();
+        this.role = user.getRole();
+    }
+
 }

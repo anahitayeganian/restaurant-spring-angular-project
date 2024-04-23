@@ -49,4 +49,9 @@ export class UserService {
     window.location.reload();
   }
 
+  getCurrentUser(): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.get(this.url + "/users/currentUser", this.httpOptions);
+  }
+
 }
