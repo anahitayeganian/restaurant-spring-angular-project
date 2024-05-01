@@ -1,10 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Bill } from 'src/app/models/Bill';
 import { BillService } from 'src/app/services/bill.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-bill-page',
@@ -15,9 +18,12 @@ import { GlobalConstants } from 'src/app/shared/global-constants';
 export class BillPageComponent {
 
   bills: Bill[] = [];
+  role: string;
 
-  constructor(private billService: BillService, private tokenService: TokenService, private datePipe: DatePipe, private toastrService: ToastrService) {
+  constructor(private billService: BillService, private tokenService: TokenService, private datePipe: DatePipe, private dialog: MatDialog,
+    private toastrService: ToastrService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
+    this.role = AuthService.retrieveTokenRole();
     this.getAllBills();
   }
 
@@ -43,6 +49,32 @@ export class BillPageComponent {
   formatDate(date: string): string {
     const dateToFormat = new Date(date);
     return this.datePipe.transform(dateToFormat, 'yyyy-MM-dd HH:mm') || '';
+  }
+
+  handleDeleteBill(bill: Bill) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'proceed with deleting the bill',
+      confirmation: true
+    };
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
+      this.deleteBill(bill.id);
+      dialogRef.close();
+    });
+  }
+
+  deleteBill(id: number) {
+    this.billService.deleteBill(id).subscribe((response: any) => {
+      this.getAllBills();
+      this.toastrService.success(response?.message);
+    }, (error: any) => {
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
   }
   
 }
