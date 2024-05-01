@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="sidebar">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <div class="main">
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Created by</th>
+                    <th>Name</th>
+                    <th>Payment method</th>
+                    <th>Total</th>
+                    <th>Uuid</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let bill of bills">
+                    <td>{{bill.id}}</td>
+                    <td>{{bill.issueDate}}</td>
+                    <td>{{bill.createdBy}}</td>
+                    <td>{{bill.name}}</td>
+                    <td>{{bill.paymentMethod}}</td>
+                    <td>{{bill.total}}</td>
+                    <td>{{bill.uuid}}</td>
+                    <td>
+                        <div class="actions">
+                            <a>
+                                <ion-icon name="trash-outline" class="icon"></ion-icon>
+                            </a>
+                            <a>
+                                <ion-icon name="open-outline" class="icon"></ion-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
