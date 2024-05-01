@@ -40,6 +40,7 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
 import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
 import { CheckoutPageComponent } from './components/pages/checkout-page/checkout-page.component';
 import { OrderProductsListComponent } from './components/partials/order-products-list/order-products-list.component';
+import { BillPageComponent } from './components/pages/bill-page/bill-page.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { OrderProductsListComponent } from './components/partials/order-products
     ItemDialogComponent,
     CartPageComponent,
     CheckoutPageComponent,
-    OrderProductsListComponent
+    OrderProductsListComponent,
+    BillPageComponent
   ],
   imports: [
     BrowserModule,

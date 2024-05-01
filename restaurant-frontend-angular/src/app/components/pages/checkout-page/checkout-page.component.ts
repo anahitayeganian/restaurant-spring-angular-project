@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Cart } from 'src/app/models/Cart';
 import { Order } from 'src/app/models/Order';
@@ -23,7 +24,7 @@ export class CheckoutPageComponent implements OnInit {
   order: Order = new Order();
 
   constructor(private tokenService: TokenService, private formBuilder: FormBuilder, private userService: UserService,
-    private cartService: CartService, private billService: BillService, private toastrService: ToastrService) {
+    private cartService: CartService, private billService: BillService, private router: Router, private toastrService: ToastrService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.getCurrentUser();
     this.cart = cartService.getCart();
@@ -94,6 +95,7 @@ export class CheckoutPageComponent implements OnInit {
     };
 
     this.billService.generateReport(data).subscribe((response: any) => {
+      this.router.navigate(['/bills']);
       this.toastrService.success(GlobalConstants.orderSent);
       this.checkoutForm.reset();
       this.cartService.clearCart();

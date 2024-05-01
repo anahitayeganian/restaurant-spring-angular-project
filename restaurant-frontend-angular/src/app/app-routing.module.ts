@@ -13,6 +13,7 @@ import { SignupPageComponent } from './components/pages/signup-page/signup-page.
 import { RouteGuardService } from './services/route-guard.service';
 import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
 import { CheckoutPageComponent } from './components/pages/checkout-page/checkout-page.component';
+import { BillPageComponent } from './components/pages/bill-page/bill-page.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path: 'categories', component: CategoryPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}},
   {path: 'items', component: ItemPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}},
   {path: 'cart', component: CartPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['user']}},
-  {path: 'cart/checkout', component: CheckoutPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['user']}}
+  {path: 'cart/checkout', component: CheckoutPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['user']}},
+  {path: 'bills', component: BillPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
 ];
 
 @NgModule({
