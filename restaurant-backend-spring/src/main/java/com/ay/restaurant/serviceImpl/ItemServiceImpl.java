@@ -68,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
         if (requestMap.containsKey("description")) {
             item.setDescription(requestMap.get("description"));
         }
-        item.setPrice(Integer.parseInt(requestMap.get("price")));
+        item.setPrice(Double.parseDouble(requestMap.get("price")));
         item.setStatus(requestMap.get("status"));
         if(!optionalCategory.isEmpty()) {
             item.setCategory(optionalCategory.get());

@@ -20,6 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -92,11 +96,20 @@ public class BillServiceImpl implements BillService {
         document.add(footer);
     }
 
-    private String prepareData(Map<String, Object> requestMap) {
+    private String prepareData(Map<String, Object> requestMap) throws ParseException {
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDateString = outputDateFormat.format(this.setDateFormat((String) requestMap.get("issueDate")));
+
         return "Name: " + requestMap.get("name") + "\n" +
                 "Contact number: " + requestMap.get("contactNumber") + "\n" +
                 "Email: " + requestMap.get("email") + "\n" +
-                "Payment method: " + requestMap.get("paymentMethod");
+                "Payment method: " + requestMap.get("paymentMethod") + "\n" +
+                "Issue Date: " + formattedDateString;
+    }
+
+    private Date setDateFormat(String stringIssueDate) throws ParseException {
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        return inputDateFormat.parse(stringIssueDate);
     }
 
     /* Retrieves the appropriate font based on the specified type */
@@ -142,8 +155,11 @@ public class BillServiceImpl implements BillService {
             bill.setName((String) requestMap.get("name"));
             bill.setEmail((String) requestMap.get("email"));
             bill.setContactNumber((String) requestMap.get("contactNumber"));
+            bill.setIssueDate(this.setDateFormat((String) requestMap.get("issueDate")));
             bill.setPaymentMethod((String) requestMap.get("paymentMethod"));
-            bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
+            bill.setTotal(Double.parseDouble((String) requestMap.get("totalAmount")));
+            //bill.setTotal(Double.parseDouble(String.format("%.2f", Double.parseDouble((String) requestMap.get("totalAmount")))));
+            //bill.setTotal(Math.round(Double.parseDouble((String) requestMap.get("totalAmount")) * 100.0) / 100.0);
             bill.setItemDetails((String) requestMap.get("itemDetails"));
             bill.setCreatedBy(jwtFilter.getCurrentUser());
             bill.setPdf(pdfData);
@@ -158,7 +174,7 @@ public class BillServiceImpl implements BillService {
         log.info("Inside addRows");
         table.addCell((String) data.get("name"));
         table.addCell((String) data.get("category"));
-        table.addCell((String) data.get("quantity"));
+        table.addCell(Integer.toString(((Double) data.get("quantity")).intValue()));
         table.addCell(Double.toString((Double) data.get("price")));
         table.addCell(Double.toString((Double) data.get("total")));
     }
@@ -209,7 +225,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public ResponseEntity<String> deleteItem(Integer id) {
+    public ResponseEntity<String> deleteBill(Integer id) {
         try {
             if(jwtFilter.isAdmin()) {
                 Optional<Bill> optionalBill = billDao.findById(id);

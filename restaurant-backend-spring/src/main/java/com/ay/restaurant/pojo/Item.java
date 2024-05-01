@@ -36,7 +36,7 @@ public class Item implements Serializable {
     private String description;
 
     @Column(name = "price")
-    private Integer price;
+    private Double price;
 
     @Column(name = "status")
     private String status;

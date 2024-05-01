@@ -12,13 +12,13 @@ public class ItemDto {
     private Integer id;
     private String name;
     private String description;
-    private Integer price;
+    private Double price;
     private String status;
     private Integer categoryId;
     private String categoryName;
     private byte[] image;
 
-    public ItemDto(Integer id, String name, String description, Integer price, String status, Integer categoryId, String categoryName) {
+    public ItemDto(Integer id, String name, String description, Double price, String status, Integer categoryId, String categoryName) {
         this.id = id;
         this.name = name;
         this.description = description;
