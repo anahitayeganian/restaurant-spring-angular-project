@@ -23,7 +23,7 @@ export class CheckoutPageComponent implements OnInit {
   order: Order = new Order();
 
   constructor(private tokenService: TokenService, private formBuilder: FormBuilder, private userService: UserService,
-    cartService: CartService, private billService: BillService, private toastrService: ToastrService) {
+    private cartService: CartService, private billService: BillService, private toastrService: ToastrService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.getCurrentUser();
     this.cart = cartService.getCart();
@@ -36,7 +36,8 @@ export class CheckoutPageComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
-      contactNumber: ['', Validators.required]
+      contactNumber: ['', Validators.required],
+      paymentMethod: ['Cash', Validators.required]
     }, {
       validator: this.validateForm
     });
@@ -81,11 +82,43 @@ export class CheckoutPageComponent implements OnInit {
       return;
     }
 
-    this.order.name = this.fc['name'].value;
-    this.order.email = this.fc['email'].value;
-    this.order.address = this.fc['address'].value;
-    this.order.createdAt = new Date();
-    this.order.status = OrderStatus.NEW;
+    const data = {
+      name: this.fc['name'].value,
+      email: this.fc['email'].value,
+      address: this.fc['address'].value,
+      contactNumber: this.fc['contactNumber'].value,
+      issueDate: new Date(),
+      totalAmount: this.cart.totalPrice.toFixed(2),
+      paymentMethod: this.fc['paymentMethod'].value,
+      itemDetails: JSON.stringify(this.getItemDetails())
+    };
+
+    this.billService.generateReport(data).subscribe((response: any) => {
+      this.toastrService.success(GlobalConstants.orderSent);
+      this.checkoutForm.reset();
+      this.cartService.clearCart();
+    }, (error: any) => {
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
+
+  getItemDetails(): any {
+    let items: any[] = [];
+    this.cart.products.forEach((product) => {
+      items.push({
+        id: product.item.id,
+        name: product.item.name,
+        category: product.item.categoryName,
+        quantity: product.quantity,
+        price: product.item.price, 
+        total: product.quantity * product.item.price
+      });
+    });
+    return items;
   }
 
 }

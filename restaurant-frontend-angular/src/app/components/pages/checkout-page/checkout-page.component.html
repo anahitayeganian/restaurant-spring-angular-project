@@ -5,6 +5,12 @@
             <text-input [control]="fc['email']" label="Email"></text-input>
             <text-input [control]="fc['address']" label="Address"></text-input>
             <text-input [control]="fc['contactNumber']" label="Contact number"></text-input>
+            <div>
+                <select formControlName="paymentMethod" id="payment-select">
+                    <option value="Cash">Cash</option>
+                    <option value="Credit card">Credit card</option>
+                </select>
+            </div>
         </form>
         <order-products-list [order]="order" [cart]="cart"></order-products-list>
     </div>
