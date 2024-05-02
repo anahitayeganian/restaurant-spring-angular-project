@@ -41,6 +41,7 @@ import { CartPageComponent } from './components/pages/cart-page/cart-page.compon
 import { CheckoutPageComponent } from './components/pages/checkout-page/checkout-page.component';
 import { OrderProductsListComponent } from './components/partials/order-products-list/order-products-list.component';
 import { BillPageComponent } from './components/pages/bill-page/bill-page.component';
+import { BillDialogComponent } from './components/dialogs/bill-dialog/bill-dialog.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { BillPageComponent } from './components/pages/bill-page/bill-page.compon
     CartPageComponent,
     CheckoutPageComponent,
     OrderProductsListComponent,
-    BillPageComponent
+    BillPageComponent,
+    BillDialogComponent
   ],
   imports: [
     BrowserModule,

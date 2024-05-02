@@ -5,6 +5,7 @@ export class GlobalConstants {
     public static unauthorized: string = "Access detected without authorization";
     public static invalidForm: string = "Please fill out the form's fields";
     public static orderSent: string = "Your order has been successfully placed";
+    public static pdfError: string = "Failed to fetch PDF";
 
 }
 

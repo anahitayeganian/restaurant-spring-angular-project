@@ -1,13 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Bill } from 'src/app/models/Bill';
+import { AuthService } from 'src/app/services/auth.service';
 import { BillService } from 'src/app/services/bill.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { BillDialogComponent } from '../../dialogs/bill-dialog/bill-dialog.component';
 import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-bill-page',
@@ -21,7 +23,7 @@ export class BillPageComponent {
   role: string;
 
   constructor(private billService: BillService, private tokenService: TokenService, private datePipe: DatePipe, private dialog: MatDialog,
-    private toastrService: ToastrService) {
+    private toastrService: ToastrService, private router: Router) {
     this.tokenService.handleTokenValidityBeforePageLoad();
     this.role = AuthService.retrieveTokenRole();
     this.getAllBills();
@@ -74,6 +76,18 @@ export class BillPageComponent {
         this.toastrService.error(error.error?.message);
       else
         this.toastrService.error(GlobalConstants.genericError);
+    });
+  }
+
+  handleViewBill(uuid: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      uuid: uuid
+    };
+    dialogConfig.position = { left: '40%' };
+    const dialogRef = this.dialog.open(BillDialogComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
     });
   }
   

@@ -29,8 +29,8 @@ export class BillService {
   }
 
   getPdf(data: any): Observable<any> {
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
-    return this.httpClient.post(this.url + "/bills/pdf", data, this.httpOptions);
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.post(this.url + "/bills/pdf", data, { headers, responseType: 'blob' });
   }
 
   deleteBill(id: number): Observable<any> {
