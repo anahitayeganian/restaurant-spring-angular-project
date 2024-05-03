@@ -63,6 +63,31 @@ th {
     border: 1px solid #ddd;
 }
 
+.filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    height: 5rem;
+    width: 60%;
+}
+
+input {
+    width: 93%;
+    border: none;
+    border-bottom: 0.09rem solid grey;
+    transition: border-bottom 0.15s ease-out;
+    background-color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(175, 175, 175, 0.863);
+    font-size: 0.95rem;
+}
+
 @media (max-width: 400px) {
     .main {
         display: flex;

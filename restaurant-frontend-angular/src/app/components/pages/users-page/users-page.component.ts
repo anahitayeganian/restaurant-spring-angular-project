@@ -13,6 +13,8 @@ import { GlobalConstants } from 'src/app/shared/global-constants';
 export class UsersPageComponent {
 
   users: User[] = [];
+  inputValue: string = '';
+  originalUsers: User[] = [];
 
   constructor(tokenService: TokenService, private userService: UserService, private toastrService: ToastrService) {
     tokenService.handleTokenValidityBeforePageLoad();
@@ -22,6 +24,8 @@ export class UsersPageComponent {
   getAllUsers() {
     this.userService.getAllUsers().subscribe((response: any) => {
       this.users = response;
+      console.log(this.users);
+      this.originalUsers = [...response];
     }, (error: any) => {
       console.error(error);
       if (error.error?.message)
@@ -29,6 +33,19 @@ export class UsersPageComponent {
       else
         this.toastrService.error(GlobalConstants.genericError);
     });
+  }
+
+  handleFilterValueChanges() {
+    this.users = [...this.originalUsers];
+    this.users = this.users.filter(user =>
+      user.id.toString().toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      user.name.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      user.email.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      user.contactNumber.toString().toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      user.role.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      user.status.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      user.address!=null && user.address.toLowerCase().includes(this.inputValue.trim().toLowerCase())
+    );
   }
 
 }
