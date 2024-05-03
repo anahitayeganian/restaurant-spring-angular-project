@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="sidebar">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <div class="main">
+        <div class="table-container">
+            <div class="title">
+                <h2>Users</h2>
+            </div>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Contact number</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let user of users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.address}}</td>
+                    <td>{{user.contactNumber}}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{user.status}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

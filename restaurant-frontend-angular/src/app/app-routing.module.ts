@@ -13,6 +13,7 @@ import { ItemsPageComponent } from './components/pages/items-page/items-page.com
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { ResetPasswordPageComponent } from './components/pages/reset-password-page/reset-password-page.component';
 import { SignupPageComponent } from './components/pages/signup-page/signup-page.component';
+import { UsersPageComponent } from './components/pages/users-page/users-page.component';
 import { RouteGuardService } from './services/route-guard.service';
 
 const routes: Routes = [
@@ -28,7 +29,8 @@ const routes: Routes = [
   {path: 'items', component: ItemsPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}},
   {path: 'cart', component: CartPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['user']}},
   {path: 'cart/checkout', component: CheckoutPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['user']}},
-  {path: 'bills', component: BillsPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}}
+  {path: 'bills', component: BillsPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin', 'user']}},
+  {path: 'users', component: UsersPageComponent, canActivate: [RouteGuardService], data: {expectedRole: ['admin']}}
 ];
 
 @NgModule({

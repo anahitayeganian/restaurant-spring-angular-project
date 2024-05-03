@@ -34,6 +34,7 @@ import { ItemsPageComponent } from "./components/pages/items-page/items-page.com
 import { LoginPageComponent } from "./components/pages/login-page/login-page.component";
 import { ResetPasswordPageComponent } from "./components/pages/reset-password-page/reset-password-page.component";
 import { SignupPageComponent } from "./components/pages/signup-page/signup-page.component";
+import { UsersPageComponent } from "./components/pages/users-page/users-page.component";
 import { DefaultButtonComponent } from "./components/partials/default-button/default-button.component";
 import { HeaderComponent } from "./components/partials/header/header.component";
 import { InputContainerComponent } from "./components/partials/input-container/input-container.component";
@@ -70,7 +71,8 @@ import { TextInputComponent } from "./components/partials/text-input/text-input.
     CheckoutPageComponent,
     OrderProductsListComponent,
     BillsPageComponent,
-    BillDialogComponent
+    BillDialogComponent,
+    UsersPageComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.io.Serializable;
 
 @NamedQuery(name = "User.findByEmail", query = "select u from User u where u.email=:email")
-@NamedQuery(name = "User.findAllUsers", query = "select new com.ay.restaurant.dto.UserDto(u.id,u.name,u.email,u.contactNumber,u.status,u.role) from User u where u.role='user'")
+@NamedQuery(name = "User.findAllUsers", query = "select new com.ay.restaurant.dto.UserDto(u.id,u.name,u.email,u.contactNumber,u.status,u.role, u.address) from User u where u.role='user'")
 @NamedQuery(name = "User.findAdminsEmail", query = "select u.email from User u where u.role='admin'")
 @NamedQuery(name = "User.updateStatus", query = "update User u set u.status=:status where u.id=:id")
 @NamedQuery(name = "User.updatePassword", query = "update User u set u.password=:password where u.id=:id")
