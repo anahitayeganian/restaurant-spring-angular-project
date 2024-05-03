@@ -7,14 +7,14 @@ import { ItemService } from 'src/app/services/item.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { ItemDialogComponent } from '../../dialogs/item-dialog/item-dialog.component';
-import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-item-page',
-  templateUrl: './item-page.component.html',
-  styleUrls: ['./item-page.component.scss']
+  selector: 'app-items-page',
+  templateUrl: './items-page.component.html',
+  styleUrls: ['./items-page.component.scss']
 })
-export class ItemPageComponent {
+export class ItemsPageComponent {
 
   items: Item[] = [];
   inputValue: string = '';
@@ -77,7 +77,7 @@ export class ItemPageComponent {
       message: 'delete ' + item.name,
       confirmation: true
     };
-    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
       this.deleteItem(item.id);
       dialogRef.close();

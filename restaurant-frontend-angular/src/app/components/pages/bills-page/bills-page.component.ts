@@ -9,15 +9,15 @@ import { BillService } from 'src/app/services/bill.service';
 import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { BillDialogComponent } from '../../dialogs/bill-dialog/bill-dialog.component';
-import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-bill-page',
-  templateUrl: './bill-page.component.html',
-  styleUrls: ['./bill-page.component.scss'],
+  selector: 'app-bills-page',
+  templateUrl: './bills-page.component.html',
+  styleUrls: ['./bills-page.component.scss'],
   providers: [DatePipe]
 })
-export class BillPageComponent {
+export class BillsPageComponent {
 
   bills: Bill[] = [];
   role: string;
@@ -59,7 +59,7 @@ export class BillPageComponent {
       message: 'proceed with deleting the bill',
       confirmation: true
     };
-    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
       this.deleteBill(bill.id);
       dialogRef.close();

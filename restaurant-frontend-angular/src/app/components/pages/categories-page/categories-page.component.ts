@@ -7,15 +7,15 @@ import { TokenService } from 'src/app/services/token.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { CategoryDialogComponent } from '../../dialogs/category-dialog/category-dialog.component';
 import { Router } from '@angular/router';
-import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-category-page',
-  templateUrl: './category-page.component.html',
-  styleUrls: ['./category-page.component.scss']
+  selector: 'app-categories-page',
+  templateUrl: './categories-page.component.html',
+  styleUrls: ['./categories-page.component.scss']
 })
-export class CategoryPageComponent {
+export class CategoriesPageComponent {
 
   categories: Category[] = [];
   inputValue: string = '';
@@ -82,7 +82,7 @@ export class CategoryPageComponent {
       message: 'delete ' + category.name,
       confirmation: true
     };
-    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
       this.deleteCategory(category.id);
       dialogRef.close();
