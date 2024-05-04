@@ -24,7 +24,6 @@ export class UsersPageComponent {
   getAllUsers() {
     this.userService.getAllUsers().subscribe((response: any) => {
       this.users = response;
-      console.log(this.users);
       this.originalUsers = [...response];
     }, (error: any) => {
       console.error(error);
@@ -46,6 +45,23 @@ export class UsersPageComponent {
       user.status.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
       user.address!=null && user.address.toLowerCase().includes(this.inputValue.trim().toLowerCase())
     );
+  }
+
+  onStatusChange(checked: boolean, id: number) {
+    const data = {
+      status: checked.toString(),
+      id: id
+    };
+    this.userService.updateStatus(data).subscribe((response: any) => {
+      this.toastrService.success(response?.message);
+      this.getAllUsers();
+    }, (error: any) => {
+      console.error(error);
+      if (error.error?.message)
+        this.toastrService.error(error.error?.message);
+      else
+        this.toastrService.error(GlobalConstants.genericError);
+    });
   }
 
 }

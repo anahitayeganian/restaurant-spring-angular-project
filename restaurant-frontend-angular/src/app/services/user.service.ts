@@ -59,4 +59,9 @@ export class UserService {
     return this.httpClient.get(this.url + "/users/all", this.httpOptions);
   }
 
+  updateStatus(data: any): Observable<any> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + AuthService.retrieveToken());
+    return this.httpClient.post(this.url + "/users/updateStatus", data, this.httpOptions);
+  }
+
 }

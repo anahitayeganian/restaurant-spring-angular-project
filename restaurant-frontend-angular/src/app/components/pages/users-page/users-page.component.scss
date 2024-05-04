@@ -88,6 +88,18 @@ input::placeholder {
     font-size: 0.95rem;
 }
 
+.actions {
+    display: flex;
+}
+
+.status {
+    margin-left: 0.6rem;
+}
+
+.status mat-slide-toggle {
+    margin-left: 0.3rem;
+}
+
 @media (max-width: 400px) {
     .main {
         display: flex;
@@ -100,6 +112,15 @@ input::placeholder {
 
     .sidebar {
         display: none;
+    }
+
+    .filter {
+        width: 85vw;
+    }
+
+    input {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
     }
 
 }
