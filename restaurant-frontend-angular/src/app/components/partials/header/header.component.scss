@@ -51,24 +51,28 @@ a span {
     position: relative;
 }
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.menu-admin,
+.menu-user {
     position: absolute;
     z-index: 1;
     background: whitesmoke;
-    display: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.menu-container:hover .menu {
-    display: block;
+.menu-admin {
+    /* Move the menu a little bit more to the left */
+    left: -80%;
 }
 
-.menu a {
+.menu-admin a,
+.menu-user a {
     padding: 1.2rem 1.2rem;
     font-family: sans-serif;
     font-size: 1rem;
+    text-align: center;
+    width: 100%;
 }
 
 .icon {
