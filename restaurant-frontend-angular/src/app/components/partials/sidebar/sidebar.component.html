@@ -1,13 +1,13 @@
 <ul>
-    <li routerLink="/dashboard">
+    <li (click)="goToDashboard()">
         Dashboard
     </li>
 
-    <li routerLink="/categories">
+    <li routerLink="/categories" *ngIf="role==='admin'">
         Categories
     </li>
 
-    <li routerLink="/items">
+    <li routerLink="/items" *ngIf="role==='admin'">
         Items
     </li>
 
@@ -15,7 +15,7 @@
         Bills
     </li>
 
-    <li routerLink="/users">
+    <li routerLink="/users" *ngIf="role==='admin'">
         Users
     </li>
 </ul>

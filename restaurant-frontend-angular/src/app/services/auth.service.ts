@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as jwt_decode from "jwt-decode";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private roleSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor() { }
 
@@ -32,6 +35,14 @@ export class AuthService {
       tokenPayload = jwt_decode.jwtDecode(token);
     }
     return tokenPayload.role;
+  }
+
+  setRole(role: string) {
+    this.roleSubject.next(role);
+  }
+
+  getRole(): BehaviorSubject<string> {
+    return this.roleSubject;
   }
 
 }

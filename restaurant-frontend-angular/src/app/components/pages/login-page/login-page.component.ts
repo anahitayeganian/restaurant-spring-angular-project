@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,7 +17,8 @@ export class LoginPageComponent implements OnInit {
   isSubmitted = false;
   private userService: UserService;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private service: UserService, private toastrService: ToastrService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private service: UserService, private authService: AuthService,
+    private toastrService: ToastrService) {
     this.userService = service;
   }
 
@@ -45,6 +46,8 @@ export class LoginPageComponent implements OnInit {
 
     this.userService.login(data).subscribe((response: any) => {
       localStorage.setItem('token', response.token);
+      const role = AuthService.retrieveTokenRole();
+      this.authService.setRole(role);
       if(AuthService.retrieveTokenRole() === 'admin')
         this.router.navigate(['/admin/dashboard']);
       else
