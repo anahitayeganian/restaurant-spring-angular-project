@@ -17,8 +17,8 @@ export class TokenService {
             this.userService.checkToken().subscribe((response: any) => {
             }, (error: any) => {
                 this.toastrService.error(GlobalConstants.unauthorized);
-                this.router.navigate(['']);
                 localStorage.clear();
+                this.router.navigate(['']);
             });
         }
     }

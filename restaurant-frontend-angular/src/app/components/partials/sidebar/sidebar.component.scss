@@ -1,14 +1,24 @@
-li {
-    font-size: 1.2rem;
-    color: white;
+#sidebar-content {
+    background-color: black;
     display: flex;
-    list-style: none;
-    margin: 1rem 0;
-    padding: 0.1rem 0;
-    padding-left: 0.2rem;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    width: 14.5rem;
+    margin-top: 3.3rem;
 }
 
-li:hover {
+.row {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    width: 100%;
+    padding: 0.4rem 0 0.4rem 1rem;
+}
+
+.row:hover {
+    color: black;
     background: white;
-    color: #ad1111;
+    opacity: 0.93;
 }

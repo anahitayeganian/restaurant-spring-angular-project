@@ -1,21 +1,21 @@
-<ul>
-    <li (click)="goToDashboard()">
+<div id="sidebar-content">
+    <div class="row" (click)="goToDashboard()">
         Dashboard
-    </li>
-
-    <li routerLink="/categories" *ngIf="role==='admin'">
+    </div>
+    
+    <div class="row" routerLink="/categories" *ngIf="role==='admin'">
         Categories
-    </li>
+    </div>
 
-    <li routerLink="/items" *ngIf="role==='admin'">
+    <div class="row" routerLink="/items" *ngIf="role==='admin'">
         Items
-    </li>
+    </div>
 
-    <li routerLink="/bills">
+    <div class="row" routerLink="/bills">
         Bills
-    </li>
+    </div>
 
-    <li routerLink="/users" *ngIf="role==='admin'">
+    <div class="row" routerLink="/users" *ngIf="role==='admin'">
         Users
-    </li>
-</ul>
+    </div>
+</div>
