@@ -27,7 +27,9 @@ export class HomePageComponent {
         else
           this.router.navigate(['/dashboard']);
       }, (error: any) => {
-        console.log(error);
+        console.error(error);
+        localStorage.clear();
+        window.location.reload();
       });
     }
   }
