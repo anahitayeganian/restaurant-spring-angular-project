@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
@@ -17,12 +18,17 @@ export class ChangePasswordPageComponent implements OnInit {
   changePasswordForm!: FormGroup;
   isSubmitted = false;
 
+  role!: string;
+
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private toastrService: ToastrService,
-    private tokenService: TokenService) {
+    private tokenService: TokenService, private authService: AuthService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
   }
 
   ngOnInit(): void {
+    this.authService.getRole().subscribe(role => {
+      this.role = role;
+    });
     this.changePasswordForm = this.formBuilder.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, PasswordValidator.validatePassword()]],
@@ -58,7 +64,10 @@ export class ChangePasswordPageComponent implements OnInit {
 
     this.userService.changePassword(data).subscribe((response: any) => {
       this.toastrService.success(response?.message);
-      this.router.navigate(['/dashboard']);
+      if(this.role === 'admin')
+        this.router.navigate(['/admin/dashboard']);
+      else
+        this.router.navigate(['/dashboard']);
     }, (error) => {
       if (error.error?.message)
         this.toastrService.error(error.error?.message);
