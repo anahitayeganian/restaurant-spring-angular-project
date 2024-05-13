@@ -115,6 +115,7 @@ export class CategoriesPageComponent {
 
     /* Apply the filter based on the input value */
     this.categories = this.categories.filter(category =>
+      category.id.toString().toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
       category.name.toLowerCase().includes(this.inputValue.trim().toLowerCase())
     );
   }
