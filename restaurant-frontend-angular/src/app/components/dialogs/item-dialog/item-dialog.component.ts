@@ -92,7 +92,8 @@ export class ItemDialogComponent {
 
     this.itemService.addItem(data).subscribe((response: any) => {
       this.toastrService.success(response?.message);
-      this.addImage(response.id);
+      if(this.selectedFileName!='')
+        this.addImage(response.id);
       this.dialogRef.close();
       this.onAddItem.emit();
     }, (error: any) => {
@@ -134,10 +135,11 @@ export class ItemDialogComponent {
     };
 
     this.itemService.updateItem(data).subscribe((response: any) => {
-      this.toastrService.success(response?.message);
-      this.addImage(data.id);
       this.dialogRef.close();
       this.onEditItem.emit();
+      this.toastrService.success(response?.message);
+      if(this.selectedFileName!='')
+        this.addImage(data.id);
     }, (error: any) => {
       this.dialogRef.close();
       console.error(error);
