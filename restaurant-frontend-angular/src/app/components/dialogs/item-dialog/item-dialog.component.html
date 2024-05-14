@@ -63,7 +63,7 @@
 
             <div fxLayout="row wrap">
                 <input type="file" (change)="onFileSelected($event)" accept="image/*">
-                <mat-error *ngIf="selectedFileName === ''">Please select an image</mat-error>
+                <mat-error *ngIf="dialogAction==='Add' && selectedFileName===''">Please select an image</mat-error>
             </div>
 
         </div>
