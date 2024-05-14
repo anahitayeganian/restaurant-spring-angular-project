@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import java.io.ByteArrayOutputStream;
@@ -40,6 +41,7 @@ public class BillServiceImpl implements BillService {
 
     private final BillDao billDao;
     private final JwtFilter jwtFilter;
+    private Date billDate = new Date();
 
     /* Generates a PDF report based on the provided request map containing bill details.
      * This method validates the request map, generates a file name, creates a PDF document, adds content to the document and saves the document to both file system and database */
@@ -98,7 +100,7 @@ public class BillServiceImpl implements BillService {
 
     private String prepareData(Map<String, Object> requestMap) throws ParseException {
         SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDateString = outputDateFormat.format(this.setDateFormat((String) requestMap.get("issueDate")));
+        String formattedDateString = outputDateFormat.format(this.billDate);
 
         return "Name: " + requestMap.get("name") + "\n" +
                 "Contact number: " + requestMap.get("contactNumber") + "\n" +
@@ -151,11 +153,12 @@ public class BillServiceImpl implements BillService {
     private void saveBill(Map<String,Object> requestMap, byte[] pdfData) {
         try {
             Bill bill = new Bill();
+            this.billDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
             bill.setUuid((String) requestMap.get("uuid"));
             bill.setName((String) requestMap.get("name"));
             bill.setEmail((String) requestMap.get("email"));
             bill.setContactNumber((String) requestMap.get("contactNumber"));
-            bill.setIssueDate(this.setDateFormat((String) requestMap.get("issueDate")));
+            bill.setIssueDate(this.billDate);
             bill.setPaymentMethod((String) requestMap.get("paymentMethod"));
             bill.setTotal(Double.parseDouble((String) requestMap.get("totalAmount")));
             //bill.setTotal(Double.parseDouble(String.format("%.2f", Double.parseDouble((String) requestMap.get("totalAmount")))));

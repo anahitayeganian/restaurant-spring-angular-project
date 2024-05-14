@@ -88,7 +88,6 @@ export class CheckoutPageComponent implements OnInit {
       email: this.fc['email'].value,
       address: this.fc['address'].value,
       contactNumber: this.fc['contactNumber'].value,
-      issueDate: new Date(),
       totalAmount: this.cart.totalPrice.toFixed(2),
       paymentMethod: this.fc['paymentMethod'].value,
       itemDetails: JSON.stringify(this.getItemDetails())
