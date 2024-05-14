@@ -1,14 +1,14 @@
-<div class="container">
-    <div class="sidebar">
+<div id="container">
+    <div id="sidebar">
         <app-sidebar></app-sidebar>
     </div>
 
-    <div class="main">
-        <div class="table-container">
-            <div class="title">
+    <div id="main">
+        <div id="table-container">
+            <div id="title">
                 <h2>Items</h2>
             </div>
-            <div class="filter">
+            <div id="filter">
                 <input type="text" [(ngModel)]="inputValue" (input)="handleFilterValueChanges()" placeholder="Filter">
             </div>
             <table>
@@ -40,7 +40,7 @@
                     </td>
                 </tr>
             </table>
-            <button class="add-button" (click)="handleAddItem()">Add item</button>
+            <button id="add-button" (click)="handleAddItem()">Add item</button>
         </div>
     </div>
 </div>

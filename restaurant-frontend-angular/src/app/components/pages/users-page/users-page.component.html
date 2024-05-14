@@ -1,14 +1,14 @@
-<div class="container">
-    <div class="sidebar">
+<div id="container">
+    <div id="sidebar">
         <app-sidebar></app-sidebar>
     </div>
 
-    <div class="main">
-        <div class="table-container">
-            <div class="title">
+    <div id="main">
+        <div id="table-container">
+            <div id="title">
                 <h2>Users</h2>
             </div>
-            <div class="filter">
+            <div id="filter">
                 <input type="text" [(ngModel)]="inputValue" (input)="handleFilterValueChanges()" placeholder="Filter">
             </div>
             <table>
