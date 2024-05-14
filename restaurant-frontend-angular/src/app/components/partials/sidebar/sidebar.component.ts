@@ -9,9 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SidebarComponent {
 
-  role: string = '';
+  role!: string;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.getRole().subscribe(role => {

@@ -20,12 +20,14 @@ import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/c
 export class BillsPageComponent {
 
   bills: Bill[] = [];
-  role: string;
+  role!: string;
 
   constructor(private billService: BillService, private tokenService: TokenService, private datePipe: DatePipe, private dialog: MatDialog,
-    private toastrService: ToastrService, private router: Router) {
+    private toastrService: ToastrService, private router: Router, private authService: AuthService) {
     this.tokenService.handleTokenValidityBeforePageLoad();
-    this.role = AuthService.retrieveTokenRole();
+    this.authService.getRole().subscribe(role => {
+      this.role = role;
+    });
     this.getAllBills();
   }
 

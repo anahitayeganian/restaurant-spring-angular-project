@@ -10,11 +10,13 @@ import { UserService } from './user.service';
 })
 export class TokenService {
 
-    constructor(private userService: UserService, private router: Router, private toastrService: ToastrService) { }
+    constructor(private userService: UserService, private router: Router, private toastrService: ToastrService,
+        private authService: AuthService) { }
 
     public handleTokenValidityBeforePageLoad() {
         if (AuthService.isAuthenticated()) {
             this.userService.checkToken().subscribe((response: any) => {
+                this.authService.setRole(AuthService.retrieveTokenRole());
             }, (error: any) => {
                 this.toastrService.error(GlobalConstants.unauthorized);
                 localStorage.clear();
