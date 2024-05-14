@@ -50,7 +50,8 @@ export class ItemsPageComponent {
       item.id.toString().toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
       item.price.toString().toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
       item.description.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
-      item.categoryName.toLowerCase().includes(this.inputValue.trim().toLowerCase())
+      item.categoryName.toLowerCase().includes(this.inputValue.trim().toLowerCase()) ||
+      item.status.toLowerCase().includes(this.inputValue.trim().toLowerCase())
     );
   }
 
