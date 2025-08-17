@@ -21,6 +21,7 @@ Built with Angular, Spring Framework, Hibernate, and MySQL, the system supports 
   - Notification emails are sent automatically.
 - **User roles:** The system supports two roles, admin and user, each with distinct dashboards and role-specific permissions.
 - **Category and item management:** Admins can add, update, and delete categories and items, each presented in a list with a search filter to quickly narrow down results by typing keywords.
+Each item can be associated with a category, which determines whether and where it appears in the restaurant menu.
 - **User management:** Admins can approve or disable user accounts using a toggle button to change their status. Status changes trigger notification emails to alert both the user and all admins. A filter functionality allows admins to refine the user list.
 - **Viewing and managing bills:**
   - Admins can access all users' bills, remove any entry, or open the PDF for a selected one.
