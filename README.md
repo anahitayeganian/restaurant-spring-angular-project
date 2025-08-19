@@ -1,29 +1,54 @@
 # Restaurant Management System
 
-A full-stack web application designed to streamline restaurant operations.
+A full-stack web application designed to streamline restaurant operations, built with Angular, Java, Spring Boot, Hibernate, and MySQL.
 
-Built with Angular, Spring Framework, Hibernate, and MySQL, the system supports online order processing, secure authentication, role-based functionalities for admins and regular users, CRUD operations for menu categories and items, bill generation, automated email notifications, and user management.
+This system supports online ordering, secure authentication, role-based access for admins and regular users, CRUD operations for menu categories, items, users, and orders, automated receipt generation and email notifications, and user management.
 
 ## ⚙️ Tech Stack
 
-- **Backend:** Java, Spring Framework
+- **Frontend:** Angular, HTML, CSS
+- **Backend:** Java, Spring Boot
 - **ORM:** Hibernate
 - **Database:** MySQL
-- **Frontend:** Angular
+
+<!--
+## 📸 Screenshots
+
+<Insert screenshots if available — e.g., admin interface, blog post list, post detail>
+-->
 
 ## Core Features
 
-- **User authentication:** Users can sign up, log in using email and password, and log out. An admin must activate the new account before the user can access ordering features.
-- **Security features:** JSON Web Tokens (JWT) are used for secure authentication and authorization. BCrypt for password hashing. Token expiration for sessions and password-reset flows.
-- **Online ordering:** Users can browse menu categories and items, add items to a cart, specify quantities, provide payment details, and submit orders. Once an order is placed:
-  - A PDF bill is generated automatically with order details and total amount.
-  - The bill is saved in the database and a copy is downloaded to the user's computer.
-  - Notification emails are sent automatically.
-- **User roles:** The system supports two roles, admin and user, each with distinct dashboards and role-specific permissions.
-- **Category and item management:** Admins can add, update, and delete categories and items, each presented in a list with a search filter to quickly narrow down results by typing keywords.
-Each item can be associated with a category, which determines whether and where it appears in the restaurant menu.
-- **User management:** Admins can approve or disable user accounts using a toggle button to change their status. Status changes trigger notification emails to alert both the user and all admins. A filter functionality allows admins to refine the user list.
-- **Viewing and managing bills:**
-  - Admins can access all users' bills, remove any entry, or open the PDF for a selected one.
-  - Users can view their own bills and download the PDF of any particular one.
-- **Password change and reset:** Users can update their password at any time while logged in. If they forget it, they can request a reset, which sends an email containing a secure link that remains active until the associated reset token expires.
+### User Authentication and Security
+The system provides secure authentication and **role-based access** for both admins and users. New accounts require admin approval before accessing ordering features.
+
+- Users can create accounts, log in with email and password, and log out.
+- Authentication and authorization are implemented with **JSON Web Tokens (JWT)** with token expiration for user sessions and password resets.
+- Passwords are securely stored using **BCrypt hashing**.
+- Server-side enforcement of role-based access prevents malicious attempts to bypass the UI, whether through the browser or by accessing backend functionality directly.
+
+### Online Ordering Workflow
+Users can browse menu categories, add items to their cart, adjust quantities, enter payment details, and place orders. After placing an order:
+- A **PDF receipt** is automatically generated with all the order details.
+- Order details and the corresponding receipt are stored in the database for future reference.
+- The receipt is downloaded locally to the user's computer.
+- An **automatic email notification** is sent to confirm the order.
+- Users can review past orders and download receipts at any time.
+
+### Admin Panel
+Admins have comprehensive control over categories, items, users, and orders, ensuring smooth restaurant operations.
+
+- **Category and Item Management**
+
+  Admins can **create, update, or delete** menu categories and items, quickly locating specific entries through the **search function**. Items can be linked to categories, which determines whether and where they appear in the **up-to-date menu**.
+- **User Management**
+  
+  Admins can **approve, disable, filter, or modify** user accounts. Status changes trigger automatic email notifications to the affected user and all admins.
+- **Order Management**
+  
+  Admins can **view, edit, or delete** orders and the associated receipts.
+
+### Password Management
+Users can:
+- Update their password while logged in.
+- Request a **password reset** via a secure email containing a **time-limited link** that expires with the reset token.
